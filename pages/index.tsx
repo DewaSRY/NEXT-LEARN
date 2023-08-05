@@ -1,22 +1,34 @@
-import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
-
-const Home: NextPage = () => {
+import { NextPage, GetStaticProps, InferGetStaticPropsType } from "next";
+import BlogCard from "../Component/BlogCard";
+import { BlogPost } from "../Utils";
+import { readPostInfo } from "../lib/Healper";
+export const getStaticProps = async () => {
+  // const { post }: PostApi = await fetch("http://localhost:3000/api/post").then(
+  //   (res) => res.json()
+  // );
+  const post = readPostInfo();
+  return {
+    props: {
+      post: post,
+    },
+  };
+};
+type Props = InferGetStaticPropsType<typeof getStaticProps>;
+const Blogs: NextPage<Props> = ({ post }) => {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline text-gray-400 ">
-        Hello world!
-      </h1>
-      <p>
-        {" "}
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Labore
-        voluptates veniam explicabo officiis temporibus fuga mollitia maiores
-        minima dolore? Excepturi aut vitae quis, tempora nobis numquam ipsam
-        quas amet veniam.
-      </p>
-    </>
+    <div className="max-w-3xl mx-auto  space-y-5">
+      {post.map((blog, id) => {
+        return (
+          <BlogCard
+            key={id}
+            title={blog.title}
+            desc={blog.meta}
+            slug={blog.slug}
+          />
+        );
+      })}
+    </div>
   );
 };
 
-export default Home;
+export default Blogs;
