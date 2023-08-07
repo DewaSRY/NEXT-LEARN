@@ -1,27 +1,22 @@
 import { FC, useState } from "react";
-
+import useStoreContext from "../../../Hooks/use-StoreContext";
 interface LinkFormProps {
   visible: boolean;
-  onSubmit: (link: LinkOption) => void;
 }
 
 export type LinkOption = { url: string; openInWeb: boolean };
-const LinkForm: FC<LinkFormProps> = ({
-  visible,
-  onSubmit,
-}): JSX.Element | null => {
+const LinkForm: FC<LinkFormProps> = ({ visible }): JSX.Element | null => {
   const [linkState, setLinkState] = useState<LinkOption>({
     url: "",
     openInWeb: false,
-  });
-  if (!visible) {
-    return null;
-  }
+  } as LinkOption);
+  const { setStoreLink } = useStoreContext();
   const handleSubmit = () => {
     if (!linkState.url.trim()) return;
-    if (!onSubmit) return;
-    onSubmit(linkState);
+    console.log("get insert");
+    setStoreLink(linkState);
   };
+  if (!visible) return null;
   return (
     <div className="rounded p-2 bg-colors-primary dark:bg-colors-secondary-dark">
       <input
