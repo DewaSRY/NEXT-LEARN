@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { BsCardImage } from "react-icons/bs";
-import Image from "./Image";
+import GalleryImages from "./Image";
 
 interface Props {
   images: { src: string }[];
@@ -26,7 +26,7 @@ const Gallery: FC<Props> = ({
       {images.map(({ src }, index) => {
         return (
           <div key={index} className="basis-1/4 p-2">
-            <Image
+            <GalleryImages
               src={src}
               selected={selectedImage === src}
               onClick={() => onSelect(src)}

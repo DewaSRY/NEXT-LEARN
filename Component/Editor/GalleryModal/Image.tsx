@@ -1,14 +1,13 @@
 import { FC } from "react";
 import NextImage from "next/image";
-import CheckMark from "../../common/CheckMark";
-
-interface Props {
+import CheckMark from "../../Common/CheckMark";
+type Props = {
   src: string;
   selected?: boolean;
   onClick?(): void;
-}
+};
 
-const Image: FC<Props> = ({ src, selected, onClick }): JSX.Element => {
+const GalleryImages: FC<Props> = ({ src, selected, onClick }): JSX.Element => {
   return (
     <div
       onClick={onClick}
@@ -29,4 +28,4 @@ const Image: FC<Props> = ({ src, selected, onClick }): JSX.Element => {
   );
 };
 
-export default Image;
+export default GalleryImages;
