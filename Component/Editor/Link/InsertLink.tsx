@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { BsLink45Deg } from "react-icons/bs";
-import Button from "../Toolbar/Button";
+import Button from "../../Common/Button";
 import LinkForm from "./LinkForm";
 
 interface InsertLinkProps {}
@@ -16,7 +16,7 @@ const InsertLink: FC<InsertLinkProps> = ({}): JSX.Element => {
         <BsLink45Deg />
       </Button>
       <div className="absolute top-full mt-4 right-0 z-50">
-        <LinkForm visible={showForm} />
+        <LinkForm visible={showForm} onVisible={setShowForm} />
       </div>
     </div>
   );

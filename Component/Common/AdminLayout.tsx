@@ -36,7 +36,7 @@ interface PropsAdminLayout {
 
 const AdminLayout: FC<PropsAdminLayout> = ({ children }) => {
   return (
-    <div className="dark flex ">
+    <div className=" flex ">
       <AdminNav navItem={NavItems} />
       <div className="flex-1 p-4">{children}</div>
       <Link href="/admin/post/create">

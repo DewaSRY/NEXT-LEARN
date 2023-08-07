@@ -5,7 +5,7 @@ import {
   HtmlHTMLAttributes,
   useCallback,
 } from "react";
-import { BsTruckFlatbed } from "react-icons/bs";
+// import { BsTruckFlatbed } from "react-icons/bs";
 
 type ButtonProps = {
   children: ReactNode;

@@ -1,21 +1,41 @@
 import { FC, useState } from "react";
-import useStoreContext from "../../../Hooks/use-StoreContext";
+import { useToolbarUtils, useEditorContext } from "../../../Hooks";
 interface LinkFormProps {
   visible: boolean;
+  onVisible: (arg: boolean) => void;
 }
-
+const DefaultState = {
+  url: "",
+  openInWeb: false,
+};
 export type LinkOption = { url: string; openInWeb: boolean };
-const LinkForm: FC<LinkFormProps> = ({ visible }): JSX.Element | null => {
-  const [linkState, setLinkState] = useState<LinkOption>({
-    url: "",
-    openInWeb: false,
-  } as LinkOption);
-  const { setStoreLink } = useStoreContext();
+const LinkForm: FC<LinkFormProps> = ({
+  visible,
+  onVisible,
+}): JSX.Element | null => {
+  const [linkState, setLinkState] = useState<LinkOption>(DefaultState);
+  const { editor } = useEditorContext();
+  const { validateUrl } = useToolbarUtils();
   const handleSubmit = () => {
     if (!linkState.url.trim()) return;
-    console.log("get insert");
-    setStoreLink(linkState);
+    const { url, openInWeb } = linkState;
+    if (!url.trim() || !editor) return;
+    if (openInWeb) {
+      console.log("hit this");
+      editor.commands.setLink({
+        href: validateUrl(url),
+        target: "_blank",
+      });
+    } else {
+      console.log("test");
+      editor.commands.setLink({
+        href: url,
+      });
+    }
+    setLinkState(DefaultState);
+    onVisible(false);
   };
+
   if (!visible) return null;
   return (
     <div className="rounded p-2 bg-colors-primary dark:bg-colors-secondary-dark">
