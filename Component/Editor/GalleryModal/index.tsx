@@ -87,6 +87,8 @@ const GalleryModal: FC<Props> = ({}): JSX.Element => {
                       src={selectedImage}
                       width={50}
                       height={50}
+                      layout="fill"
+                      objectFit="contain"
                       alt="hallo"
                     />
                   </div>
