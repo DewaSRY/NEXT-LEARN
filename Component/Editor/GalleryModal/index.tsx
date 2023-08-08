@@ -4,32 +4,30 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import ActionButton from "../../Common/ActionButton";
 import ModalContainer, { ModalProps } from "../../Common/ModalContainer";
 import Gallery from "./Gallery";
-
+import { useToolbarUtils, useGalleryContext } from "../../../Hooks";
 export interface ImageSelectionResult {
   src: string;
   altText: string;
 }
 
 interface Props extends ModalProps {
-  images: { src: string }[];
   uploading?: boolean;
   onFileSelect(image: File): void;
-  onSelect(result: ImageSelectionResult): void;
 }
 
-const GalleryModal: FC<Props> = ({
-  visible,
-  uploading,
-  images,
-  onFileSelect,
-  onSelect,
-  onClose,
-}): JSX.Element => {
+const GalleryModal: FC<Props> = ({ uploading, onFileSelect }): JSX.Element => {
+  const { editor } = useToolbarUtils();
+  const { onClose, showGallery } = useGalleryContext();
   const [selectedImage, setSelectedImage] = useState("");
   const [altText, setAltText] = useState("");
-
   const handleClose = useCallback(() => onClose && onClose(), [onClose]);
-
+  const handleImageSelection = (result: ImageSelectionResult) => {
+    editor
+      ?.chain()
+      .focus()
+      .setImage({ src: result.src, alt: result.altText })
+      .run();
+  };
   const handleOnImageChange: ChangeEventHandler<HTMLInputElement> = ({
     target,
   }) => {
@@ -44,18 +42,17 @@ const GalleryModal: FC<Props> = ({
 
   const handleSelection = () => {
     if (!selectedImage) return handleClose();
-    onSelect({ src: selectedImage, altText });
+    handleImageSelection({ src: selectedImage, altText });
     handleClose();
   };
 
   return (
-    <ModalContainer visible={visible} onClose={onClose}>
+    <ModalContainer visible={showGallery} onClose={onClose}>
       <div className="max-w-4xl p-2 bg-primary-dark dark:bg-primary rounded">
         <div className="flex">
           {/* gallery */}
           <div className="basis-[75%] max-h-[450px] overflow-y-auto custom-scroll-bar">
             <Gallery
-              images={images}
               selectedImage={selectedImage}
               uploading={uploading}
               onSelect={(src) => setSelectedImage(src)}
@@ -96,6 +93,7 @@ const GalleryModal: FC<Props> = ({
                       src={selectedImage}
                       layout="fill"
                       objectFit="contain"
+                      alt="hallo"
                     />
                   </div>
                 </>

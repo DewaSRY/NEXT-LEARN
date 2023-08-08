@@ -1,20 +1,21 @@
 import { FC } from "react";
 import { BsCardImage } from "react-icons/bs";
-import GalleryImages from "./Image";
+import GalleryImages from "./GalleryImages";
+import { useGalleryContext } from "../../../Hooks";
 
 interface Props {
-  images: { src: string }[];
-  onSelect(src: string): void;
   uploading?: boolean;
   selectedImage?: string;
+  onSelect(src: string): void;
 }
 
 const Gallery: FC<Props> = ({
-  images,
   uploading = false,
   selectedImage = "",
   onSelect,
 }): JSX.Element => {
+  const { images } = useGalleryContext();
+
   return (
     <div className="flex flex-wrap">
       {uploading && (

@@ -28,7 +28,7 @@ const AdminNav: NextPage<PropsAdminNav> = (props) => {
   return (
     <nav
       ref={navRev}
-      className="h-screen w-12 shadow-sm bg-colors-secondary-light dark:bg-colors-secondary-dark flex flex-col justify-between transition transition-width sticky top-0"
+      className="h-screen w-12 shadow-sm bg-colors-secondary-light dark:bg-colors-secondary-dark flex flex-col justify-between  transition-width sticky top-0"
     >
       <div>
         {/* logo */}

@@ -1,11 +1,4 @@
-import {
-  FC,
-  MouseEventHandler,
-  ReactNode,
-  useCallback,
-  useEffect,
-  useId,
-} from "react";
+import { FC, ReactNode, useCallback, useEffect, useId } from "react";
 
 export interface ModalProps {
   visible?: boolean;

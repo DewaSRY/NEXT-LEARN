@@ -1,8 +1,10 @@
-import { FC, useState } from "react";
-import { useToolbarUtils, useEditorContext } from "../../../Hooks";
+import { FC, useState, useEffect } from "react";
+import { useToolbarUtils } from "../../../Hooks";
 interface LinkFormProps {
   visible: boolean;
   onVisible: (arg: boolean) => void;
+  initialLinkState?: LinkOption;
+  handleSubmit?: (arg: LinkOption) => void;
 }
 const DefaultState = {
   url: "",
@@ -12,31 +14,39 @@ export type LinkOption = { url: string; openInWeb: boolean };
 const LinkForm: FC<LinkFormProps> = ({
   visible,
   onVisible,
+  initialLinkState,
+  handleSubmit,
 }): JSX.Element | null => {
   const [linkState, setLinkState] = useState<LinkOption>(DefaultState);
-  const { editor } = useEditorContext();
-  const { validateUrl } = useToolbarUtils();
-  const handleSubmit = () => {
-    if (!linkState.url.trim()) return;
+  const { validateUrl, editor } = useToolbarUtils();
+  const handleClickSubmit = () => {
     const { url, openInWeb } = linkState;
     if (!url.trim() || !editor) return;
-    if (openInWeb) {
-      console.log("hit this");
-      editor.commands.setLink({
-        href: validateUrl(url),
-        target: "_blank",
-      });
+    if (handleSubmit) {
+      console.log(url);
+      handleSubmit({ url, openInWeb });
     } else {
-      console.log("test");
-      editor.commands.setLink({
-        href: url,
-      });
+      if (openInWeb) {
+        editor.commands.toggleLink({
+          href: validateUrl(url),
+          target: "_blank",
+        });
+      } else {
+        editor.commands.toggleLink({
+          href: url,
+        });
+      }
     }
     setLinkState(DefaultState);
     onVisible(false);
   };
-
+  useEffect(() => {
+    if (initialLinkState) {
+      setLinkState(initialLinkState);
+    }
+  }, [initialLinkState]);
   if (!visible) return null;
+
   return (
     <div className="rounded p-2 bg-colors-primary dark:bg-colors-secondary-dark">
       <input
@@ -66,7 +76,7 @@ const LinkForm: FC<LinkFormProps> = ({
         </label>
         <div className="flex-1 text-right">
           <button
-            onClick={handleSubmit}
+            onClick={handleClickSubmit}
             className="bg-colors-action px-2 py-1 text-colors-primary rounded text-sm"
           >
             Apply

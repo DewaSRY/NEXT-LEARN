@@ -1,12 +1,12 @@
 import { FC } from "react";
 import { EditorContent } from "@tiptap/react";
 
-import { useEditorContext } from "../../Hooks";
+import { useToolbarUtils } from "../../Hooks";
 interface EditorProps {}
 import Toolbar from "./Toolbar";
 import EditLink from "./Link/EditLink";
 const Editor: FC<EditorProps> = (): JSX.Element | null => {
-  const { editor } = useEditorContext();
+  const { editor } = useToolbarUtils();
   if (!editor) return null;
   return (
     <div className="max-w-4xl mx-auto p-3 dark:bg-colors-primary-dark bg-colors-primary transition">

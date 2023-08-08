@@ -1,2 +1,2 @@
-export * from "./use-EditorContext";
+export * from "./Use-GalleryContext";
 export * from "./Use-ToolbarUtils";

@@ -1,4 +1,4 @@
-import { Editor } from "@tiptap/react";
+import { ChainedCommands } from "@tiptap/react";
 import { FC } from "react";
 import { useContext } from "react";
 import { EditorContext } from "../Context/Editor.context";
@@ -13,13 +13,13 @@ import {
   BsTypeItalic,
   BsTypeUnderline,
   BsImageFill,
-  BsYoutube,
 } from "react-icons/bs";
 import InsertLink from "../Component/Editor/Link/InsertLink";
+import EmbedYoutube from "../Component/Editor/Toolbar/EmbedYoutube";
 import { AiFillCaretDown } from "react-icons/ai";
 
 export function useToolbarUtils() {
-  const { editor, cainsEditor } = useContext(EditorContext);
+  const { editor } = useContext(EditorContext);
 
   const userOption = [
     {
@@ -58,12 +58,12 @@ export function useToolbarUtils() {
       </div>
     );
   };
-
   const toolIcons = [
     {
       icon: Separator,
       onClick: () => {},
       insert: false,
+      active: false,
     },
     {
       icon: BsTypeBold,
@@ -92,6 +92,7 @@ export function useToolbarUtils() {
     {
       icon: Separator,
       onClick: () => {},
+      active: false,
       insert: false,
     },
     {
@@ -115,6 +116,7 @@ export function useToolbarUtils() {
     {
       icon: InsertLink,
       onClick: () => {},
+      active: false,
       insert: false,
     },
     {
@@ -132,17 +134,19 @@ export function useToolbarUtils() {
     {
       icon: Separator,
       onClick: () => {},
+      active: false,
+      insert: false,
+    },
+
+    {
+      icon: EmbedYoutube,
+      onClick: () => {},
+      active: false,
       insert: false,
     },
     {
       icon: BsImageFill,
-      onClick: () => {},
-      active: false,
-      insert: true,
-    },
-    {
-      icon: BsYoutube,
-      onClick: () => {},
+      onClick: () => setShowGallery((prev) => !prev),
       active: false,
       insert: true,
     },
@@ -151,16 +155,22 @@ export function useToolbarUtils() {
     let finalUrl;
     try {
       finalUrl = new URL(ur);
-      return finalUrl.origin;
     } catch (err) {
       finalUrl = new URL(`http://${ur}.com`);
-      return finalUrl.origin;
     }
+    return finalUrl.origin;
   }
+
+  const cainsEditor = (): ChainedCommands => {
+    return editor!.chain().focus();
+  };
+
   return {
     userOption,
     Head,
     toolIcons,
     validateUrl,
+    cainsEditor,
+    editor,
   };
 }

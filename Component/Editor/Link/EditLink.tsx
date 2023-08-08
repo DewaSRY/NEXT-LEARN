@@ -2,11 +2,12 @@ import { FC, useCallback, useState } from "react";
 import { BsBoxArrowUpRight, BsPencilSquare } from "react-icons/bs";
 import { BiUnlink } from "react-icons/bi";
 import { BubbleMenu } from "@tiptap/react";
-import { useEditorContext } from "../../../Hooks";
+import { useToolbarUtils } from "../../../Hooks";
+import LinkForm, { LinkOption } from "./LinkForm";
 interface Props {}
 
 const EditLink: FC<Props> = ({}): JSX.Element | null => {
-  const { editor, cainsEditor } = useEditorContext();
+  const { validateUrl, editor } = useToolbarUtils();
   const [showEditForm, setShowEditForm] = useState(false);
 
   const handleOnLinkOpenClick = useCallback(() => {
@@ -24,18 +25,27 @@ const EditLink: FC<Props> = ({}): JSX.Element | null => {
     editor!.commands.unsetLink();
   };
 
-  // const handleSubmit = ({ url, openInNewTab }: linkOption) => {
-  //   cainsEditor()!
-  //     .unsetLink()
-  //     .setLink({ href: url, target: openInNewTab ? "_blank" : "" })
-  //     .run();
-  //   setShowEditForm(false);
-  // };
+  const handleSubmit = ({ url, openInWeb }: LinkOption) => {
+    editor
+      ?.chain()
+      .focus()
+      .unsetLink()
+      .setLink({
+        href: validateUrl(url),
+        target: openInWeb ? "_blank" : "",
+      })
+      .run();
+  };
 
   const getInitialState = useCallback(() => {
     const { href, target } = editor!.getAttributes("link");
-    return { url: href, openInNewTab: target ? true : false };
+    console.log(href, target);
+    return {
+      url: href,
+      openInWeb: target ? true : false,
+    };
   }, [editor]);
+
   if (!editor) return null;
 
   return (
@@ -48,6 +58,12 @@ const EditLink: FC<Props> = ({}): JSX.Element | null => {
         },
       }}
     >
+      <LinkForm
+        visible={showEditForm}
+        onVisible={setShowEditForm}
+        initialLinkState={getInitialState()}
+        handleSubmit={handleSubmit}
+      />
       {!showEditForm && (
         <div className="rounded bg-primary dark:bg-primary-dark text-primary-dark dark:text-primary shadow-secondary-dark shadow-md p-3 flex items-center space-x-6 z-50">
           <button onClick={handleOnLinkOpenClick}>
