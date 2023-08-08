@@ -8,7 +8,6 @@ import Youtube from "@tiptap/extension-youtube";
 import TipTapImage from "@tiptap/extension-image";
 interface EditorContextProps {
   readonly editor: Editor | null;
-  // readonly selectionRange:Range
 }
 export const EditorContext = createContext<EditorContextProps>(
   {} as EditorContextProps

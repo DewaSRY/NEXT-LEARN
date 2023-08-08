@@ -39,7 +39,6 @@ const EditLink: FC<Props> = ({}): JSX.Element | null => {
 
   const getInitialState = useCallback(() => {
     const { href, target } = editor!.getAttributes("link");
-    console.log(href, target);
     return {
       url: href,
       openInWeb: target ? true : false,

@@ -1,8 +1,8 @@
 import { FC, ReactNode, useCallback, useEffect, useId } from "react";
 
 export interface ModalProps {
-  visible?: boolean;
-  onClose?(): void;
+  visible: boolean;
+  onClose(): void;
 }
 
 interface Props extends ModalProps {
@@ -15,7 +15,11 @@ const ModalContainer: FC<Props> = ({
   onClose,
 }): JSX.Element | null => {
   const containerId = useId();
-  const handleClose = useCallback(() => onClose && onClose(), [onClose]);
+  const handleClose = useCallback(() => {
+    if (onClose) {
+      onClose();
+    }
+  }, [onClose]);
 
   const handleClick = ({ target }: any) => {
     if (target.id === containerId) handleClose();
@@ -23,7 +27,6 @@ const ModalContainer: FC<Props> = ({
 
   useEffect(() => {
     const closeModal = ({ key }: any) => key === "Escape" && handleClose();
-
     document.addEventListener("keydown", closeModal);
     return () => document.removeEventListener("keydown", closeModal);
   }, [handleClose]);

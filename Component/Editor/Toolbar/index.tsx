@@ -5,10 +5,8 @@ import Button from "../../Common/Button";
 import GalleryModal from "../GalleryModal";
 import { useToolbarUtils } from "../../../Hooks/Use-ToolbarUtils";
 interface ToolbarProps {}
-
 const Toolbar: FC<ToolbarProps> = ({}): JSX.Element | null => {
   const { userOption, toolIcons, Head } = useToolbarUtils();
-
   return (
     <>
       <div className="flex items-center">

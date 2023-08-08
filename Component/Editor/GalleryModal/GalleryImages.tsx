@@ -1,4 +1,5 @@
 import { FC } from "react";
+// import Image from "next/image";
 import NextImage from "next/image";
 import CheckMark from "../../Common/CheckMark";
 type Props = {
@@ -6,7 +7,6 @@ type Props = {
   selected?: boolean;
   onClick?(): void;
 };
-
 const GalleryImages: FC<Props> = ({ src, selected, onClick }): JSX.Element => {
   return (
     <div
@@ -19,7 +19,7 @@ const GalleryImages: FC<Props> = ({ src, selected, onClick }): JSX.Element => {
         height={200}
         alt="gallery"
         objectFit="cover"
-        className="bg-secondary-light hover:scale-110 transition"
+        className="bg-colors-secondary-light hover:scale-110 transition"
       />
       <div className="absolute top-2 left-2">
         <CheckMark visible={selected || false} />

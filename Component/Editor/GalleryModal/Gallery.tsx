@@ -4,18 +4,12 @@ import GalleryImages from "./GalleryImages";
 import { useGalleryContext } from "../../../Hooks";
 
 interface Props {
-  uploading?: boolean;
   selectedImage?: string;
   onSelect(src: string): void;
 }
 
-const Gallery: FC<Props> = ({
-  uploading = false,
-  selectedImage = "",
-  onSelect,
-}): JSX.Element => {
-  const { images } = useGalleryContext();
-
+const Gallery: FC<Props> = ({ selectedImage, onSelect }): JSX.Element => {
+  const { images, uploading } = useGalleryContext();
   return (
     <div className="flex flex-wrap">
       {uploading && (
@@ -24,13 +18,13 @@ const Gallery: FC<Props> = ({
           <p>Uploading</p>
         </div>
       )}
-      {images.map(({ src }, index) => {
+      {images.map((img, index) => {
         return (
           <div key={index} className="basis-1/4 p-2">
             <GalleryImages
-              src={src}
-              selected={selectedImage === src}
-              onClick={() => onSelect(src)}
+              src={img.src}
+              selected={selectedImage === img.src}
+              onClick={() => onSelect(img.src)}
             />
           </div>
         );

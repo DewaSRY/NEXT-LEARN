@@ -1,9 +1,17 @@
-import { useState, createContext, PropsWithChildren } from "react";
+import {
+  useState,
+  createContext,
+  PropsWithChildren,
+  useEffect,
+  SetStateAction,
+} from "react";
 import axios from "axios";
 interface GalleryContext {
   images: { src: string }[];
   handleImageUpload: (image: File) => void;
   uploading: boolean;
+  showGallery: boolean;
+  toggleGallery: () => void;
 }
 export const GalleryContext = createContext<GalleryContext>(
   {} as GalleryContext
@@ -85,6 +93,8 @@ const ImagesDefault = [
 export const GalleryProvider = ({ children }: PropsWithChildren) => {
   const [images, setImages] = useState(ImagesDefault);
   const [uploading, setUploading] = useState(false);
+  const [showGallery, setShowGallery] = useState(true);
+  const toggleGallery = () => setShowGallery((prev) => !prev);
   const handleImageUpload = async (image: File) => {
     setUploading(true);
     const formData = new FormData();
@@ -93,10 +103,20 @@ export const GalleryProvider = ({ children }: PropsWithChildren) => {
     setUploading(false);
     setImages([data, ...images]);
   };
+  // const fetchImages = async () => {
+  //   const { data } = await axios("/api/image");
+  //   setImages(data.images);
+  // };
+  // useEffect(() => {
+  //   fetchImages();
+  // }, []);
+
   const value = {
     images,
     handleImageUpload,
     uploading,
+    showGallery,
+    toggleGallery,
   };
   return (
     <GalleryContext.Provider value={value}>{children}</GalleryContext.Provider>

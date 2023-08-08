@@ -1,7 +1,7 @@
 import { ChainedCommands } from "@tiptap/react";
 import { FC } from "react";
 import { useContext } from "react";
-import { EditorContext } from "../Context/Editor.context";
+import { EditorContext, GalleryContext } from "../Context";
 import { RiDoubleQuotesL } from "react-icons/ri";
 import {
   BsTypeBold,
@@ -20,6 +20,7 @@ import { AiFillCaretDown } from "react-icons/ai";
 
 export function useToolbarUtils() {
   const { editor } = useContext(EditorContext);
+  const { toggleGallery } = useContext(GalleryContext);
 
   const userOption = [
     {
@@ -146,7 +147,7 @@ export function useToolbarUtils() {
     },
     {
       icon: BsImageFill,
-      onClick: () => setShowGallery((prev) => !prev),
+      onClick: () => toggleGallery(),
       active: false,
       insert: true,
     },

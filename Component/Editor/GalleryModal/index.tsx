@@ -10,17 +10,14 @@ export interface ImageSelectionResult {
   altText: string;
 }
 
-interface Props extends ModalProps {
-  uploading?: boolean;
-  onFileSelect(image: File): void;
-}
+interface Props {}
 
-const GalleryModal: FC<Props> = ({ uploading, onFileSelect }): JSX.Element => {
+const GalleryModal: FC<Props> = ({}): JSX.Element => {
   const { editor } = useToolbarUtils();
-  const { onClose, showGallery } = useGalleryContext();
+  const { onClose, showGallery, handleImageUpload } = useGalleryContext();
   const [selectedImage, setSelectedImage] = useState("");
+  console.log(selectedImage);
   const [altText, setAltText] = useState("");
-  const handleClose = useCallback(() => onClose && onClose(), [onClose]);
   const handleImageSelection = (result: ImageSelectionResult) => {
     editor
       ?.chain()
@@ -33,28 +30,25 @@ const GalleryModal: FC<Props> = ({ uploading, onFileSelect }): JSX.Element => {
   }) => {
     const { files } = target;
     if (!files) return;
-
     const file = files[0];
-    if (!file.type.startsWith("image")) return handleClose();
-
-    onFileSelect(file);
+    if (!file.type.startsWith("image")) return onClose();
+    handleImageUpload(file);
   };
 
   const handleSelection = () => {
-    if (!selectedImage) return handleClose();
+    if (!selectedImage) return onClose();
     handleImageSelection({ src: selectedImage, altText });
-    handleClose();
+    onClose();
   };
 
   return (
     <ModalContainer visible={showGallery} onClose={onClose}>
-      <div className="max-w-4xl p-2 bg-primary-dark dark:bg-primary rounded">
+      <div className="max-w-4xl p-2 bg-colors-primary-dark dark:bg-colors-primary rounded">
         <div className="flex">
           {/* gallery */}
           <div className="basis-[75%] max-h-[450px] overflow-y-auto custom-scroll-bar">
             <Gallery
               selectedImage={selectedImage}
-              uploading={uploading}
               onSelect={(src) => setSelectedImage(src)}
             />
           </div>
@@ -72,7 +66,7 @@ const GalleryModal: FC<Props> = ({ uploading, onFileSelect }): JSX.Element => {
                 <label htmlFor="image-input">
                   <div className="w-full border-2 border-action text-action flex items-center justify-center space-x-2 p-2 cursor-pointer rounded">
                     <AiOutlineCloudUpload />
-                    <span>Upload Image</span>
+                    <span className="text-colors-primary">Upload Image</span>
                   </div>
                 </label>
               </div>
@@ -80,7 +74,7 @@ const GalleryModal: FC<Props> = ({ uploading, onFileSelect }): JSX.Element => {
               {selectedImage ? (
                 <>
                   <textarea
-                    className="resize-none w-full bg-transparent rounded border-2 border-secondary-dark focus:ring-1 text-primary dark:text-primary-dark h-32 p-1"
+                    className="resize-none w-full bg-transparent rounded border-2 border-colors-secondary-dark focus:ring-1 text-colors-primary dark:text-colors-primary-dark h-32 p-1"
                     placeholder="Alt text"
                     value={altText}
                     onChange={({ target }) => setAltText(target.value)}
@@ -91,8 +85,8 @@ const GalleryModal: FC<Props> = ({ uploading, onFileSelect }): JSX.Element => {
                   <div className="relative aspect-video bg-png-pattern">
                     <Image
                       src={selectedImage}
-                      layout="fill"
-                      objectFit="contain"
+                      width={50}
+                      height={50}
                       alt="hallo"
                     />
                   </div>
