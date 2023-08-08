@@ -93,7 +93,7 @@ const ImagesDefault = [
 export const GalleryProvider = ({ children }: PropsWithChildren) => {
   const [images, setImages] = useState(ImagesDefault);
   const [uploading, setUploading] = useState(false);
-  const [showGallery, setShowGallery] = useState(true);
+  const [showGallery, setShowGallery] = useState(false);
   const toggleGallery = () => setShowGallery((prev) => !prev);
   const handleImageUpload = async (image: File) => {
     setUploading(true);
@@ -105,8 +105,9 @@ export const GalleryProvider = ({ children }: PropsWithChildren) => {
   };
   // const fetchImages = async () => {
   //   const { data } = await axios("/api/image");
-  //   setImages(data.images);
+  //   setImages((prev) => [...prev, ...data.images]);
   // };
+
   // useEffect(() => {
   //   fetchImages();
   // }, []);
