@@ -64,8 +64,8 @@ const GalleryModal: FC<Props> = ({}): JSX.Element => {
                   id="image-input"
                 />
                 <label htmlFor="image-input">
-                  <div className="w-full border-2 border-action text-action flex items-center justify-center space-x-2 p-2 cursor-pointer rounded">
-                    <AiOutlineCloudUpload />
+                  <div className="w-full border-2 border-colors-action text-action flex items-center justify-center space-x-2 p-2 cursor-pointer rounded">
+                    <AiOutlineCloudUpload className="text-colors-action" />
                     <span className="text-colors-primary">Upload Image</span>
                   </div>
                 </label>
