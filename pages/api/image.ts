@@ -22,21 +22,36 @@ const handler: NextApiHandler = (req, res) => {
 
 const uploadNewImage: NextApiHandler = async (req, res) => {
   try {
-    const { files } = await readFile(req);
-    const imageFile = files.image as formidable.File;
-    const { secure_url: url } = await cloudinary.uploader.upload(
-      imageFile.filepath,
-      {
-        folder: "dev-blogs",
-      }
-    );
+    const { filePath } = await readFile(req);
+    // const imageFile = files.image as formidable.File;
+    const { secure_url: url } = await cloudinary.uploader.upload(filePath, {
+      folder: "dev-blogs",
+      public_id: ` ${Date.now()}`,
+      resource_type: "auto",
+    });
 
     res.json({ src: url });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
-
+// const uploadNewImage: NextApiHandler = (req, res) => {
+//   const form = formidable();
+//   form.parse(req, async (err, fields, files) => {
+//     if (err) return res.status(500).json({ error: err.message });
+//     const imageFile = files.image as formidable.File;
+//     console.log(imageFile.filepath);
+//     const { secure_url } = await cloudinary.uploader.upload(
+//       imageFile.filepath,
+//       {
+//         folder: "dev-blogs",
+//         public_id: `${Date.now()}`,
+//         resource_type: "auto",
+//       }
+//     );
+//     res.json({ image: secure_url });
+//   });
+// };
 const readAllImages: NextApiHandler = async (req, res) => {
   try {
     const { resources } = await cloudinary.api.resources({

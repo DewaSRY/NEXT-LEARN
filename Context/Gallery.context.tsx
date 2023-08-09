@@ -103,14 +103,15 @@ export const GalleryProvider = ({ children }: PropsWithChildren) => {
     setUploading(false);
     setImages([data, ...images]);
   };
-  // const fetchImages = async () => {
-  //   const { data } = await axios("/api/image");
-  //   setImages((prev) => [...prev, ...data.images]);
-  // };
+  const fetchImages = async () => {
+    const { data } = await axios("/api/image");
 
-  // useEffect(() => {
-  //   fetchImages();
-  // }, []);
+    setImages((prev) => [...data.images, ...prev]);
+  };
+
+  useEffect(() => {
+    fetchImages();
+  }, []);
 
   const value = {
     images,

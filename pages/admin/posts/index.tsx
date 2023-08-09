@@ -9,7 +9,11 @@ const index: NextPage<indexProps> = () => {
     <EditorProvider>
       <GalleryProvider>
         <AdminLayout>
-          <Editor />
+          <Editor
+            onSubmit={(post) => {
+              console.log(post);
+            }}
+          />
         </AdminLayout>
       </GalleryProvider>
     </EditorProvider>

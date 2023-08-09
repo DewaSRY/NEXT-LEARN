@@ -70,7 +70,6 @@ const GalleryModal: FC<Props> = ({}): JSX.Element => {
                   </div>
                 </label>
               </div>
-
               {selectedImage ? (
                 <>
                   <textarea

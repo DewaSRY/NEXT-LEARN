@@ -17,6 +17,7 @@
     "@tiptap/pm": "^2.0.4",
     "@tiptap/react": "^2.0.4",
     "@tiptap/starter-kit": "^2.0.4",
+    "@types/formidable": "^3.4.0",
     "axios": "^1.4.0",
     "cloudinary": "^1.40.0",
     "formidable": "^3.5.0",
