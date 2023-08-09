@@ -23,6 +23,8 @@
     "cloudinary": "^1.40.0",
     "formidable": "^3.5.0",
     "gray-matter": "^4.0.3",
+    "joi": "^17.9.2",
+    "mongoose": "^7.4.2",
     "next": "12.2.5",
     "next-mdx-remote": "^4.4.1",
     "react": "18.2.0",

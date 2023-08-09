@@ -1,27 +1,33 @@
 import { FC, ChangeEventHandler, useState, useEffect } from "react";
 import { EditorContent } from "@tiptap/react";
-import SEOForm, { SeoResult } from "./SeoForm";
+import SEOForm from "./SeoForm";
 import { useEditorContext } from "../../Hooks";
 import ThumbnailSelector from "./ThumbnailSelector";
 import ActionButton from "../Common/ActionButton";
 import slugify from "slugify";
+import Toolbar from "./Toolbar";
+import EditLink from "./Link/EditLink";
 interface EditorProps {
   initialValue?: FinalPost;
   onSubmit(post: FinalPost): void;
+  busy?: boolean;
+  btnTitle: string;
 }
-export interface FinalPost extends SeoResult {
+export interface FinalPost {
   title: string;
   content: string;
   thumbnail?: File | string;
   meta: string;
   tags: string;
   slug: string;
+  id?: string;
 }
-import Toolbar from "./Toolbar";
-import EditLink from "./Link/EditLink";
+
 const Editor: FC<EditorProps> = ({
   initialValue,
   onSubmit,
+  busy = false,
+  btnTitle,
 }): JSX.Element | null => {
   const { editor } = useEditorContext();
   const [post, setPost] = useState<FinalPost>({
@@ -67,7 +73,11 @@ const Editor: FC<EditorProps> = ({
               onChange={updateThumbnail}
             />
             <div className="inline-block">
-              <ActionButton title="Submit" onClick={handleSubmit} />
+              <ActionButton
+                title={btnTitle}
+                onClick={handleSubmit}
+                busy={busy}
+              />
             </div>
           </div>
           <input
@@ -85,7 +95,6 @@ const Editor: FC<EditorProps> = ({
         <EditorContent editor={editor} className="min-h-[300px]" />
         <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
         <SEOForm
-          setValue={setPost}
           value={post}
           // initialValue={seoInitialValue}
           handleChange={handleChange}

@@ -1,34 +1,16 @@
-import {
-  ChangeEventHandler,
-  FC,
-  useEffect,
-  Dispatch,
-  SetStateAction,
-} from "react";
+import { ChangeEventHandler, FC } from "react";
 // import slugify from "slugify";
 import { FinalPost } from "./index";
-export interface SeoResult {
-  meta: string;
-  slug: string;
-  tags: string;
-}
 
 interface Props {
-  initialValue?: SeoResult;
   value: FinalPost;
-  setValue: Dispatch<SetStateAction<FinalPost>>;
   handleChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
 }
 
 const commonInput =
   "w-full bg-transparent outline-none border-2 border-secondary-dark focus:border-primary-dark focus:dark:border-primary rounded transition text-primary-dark dark:text-primary p-2 ";
 
-const SEOForm: FC<Props> = ({
-  initialValue,
-  value,
-  setValue,
-  handleChange,
-}): JSX.Element => {
+const SEOForm: FC<Props> = ({ value, handleChange }): JSX.Element => {
   const { meta, slug, tags } = value;
 
   return (
