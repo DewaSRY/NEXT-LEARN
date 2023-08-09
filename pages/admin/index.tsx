@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import AdminLayout from "../../Component/Common/AdminLayout";
+import AdminLayout from "../../Component/Layout/AdminLayout";
 interface Props {}
 const index: NextPage<Props> = () => {
   return (

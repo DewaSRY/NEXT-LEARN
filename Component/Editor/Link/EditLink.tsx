@@ -2,12 +2,12 @@ import { FC, useCallback, useState } from "react";
 import { BsBoxArrowUpRight, BsPencilSquare } from "react-icons/bs";
 import { BiUnlink } from "react-icons/bi";
 import { BubbleMenu } from "@tiptap/react";
-import { useToolbarUtils } from "../../../Hooks";
+import { useEditorContext } from "../../../Hooks";
 import LinkForm, { LinkOption } from "./LinkForm";
 interface Props {}
 
 const EditLink: FC<Props> = ({}): JSX.Element | null => {
-  const { validateUrl, editor } = useToolbarUtils();
+  const { validateUrl, editor } = useEditorContext();
   const [showEditForm, setShowEditForm] = useState(false);
 
   const handleOnLinkOpenClick = useCallback(() => {

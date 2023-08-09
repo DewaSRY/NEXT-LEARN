@@ -19,7 +19,7 @@ const GalleryImages: FC<Props> = ({ src, selected, onClick }): JSX.Element => {
         height={200}
         alt="gallery"
         objectFit="cover"
-        className="bg-colors-secondary-light hover:scale-110 transition"
+        className="bg-secondary-light hover:scale-110 transition"
       />
       <div className="absolute top-2 left-2">
         <CheckMark visible={selected || false} />

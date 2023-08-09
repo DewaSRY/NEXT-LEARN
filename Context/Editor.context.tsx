@@ -6,6 +6,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Link from "@tiptap/extension-link";
 import Youtube from "@tiptap/extension-youtube";
 import TipTapImage from "@tiptap/extension-image";
+import Code from "@tiptap/extension-code";
 interface EditorContextProps {
   readonly editor: Editor | null;
 }
@@ -18,6 +19,11 @@ export const EditorProvider = ({ children }: PropsWithChildren) => {
     extensions: [
       StarterKit,
       Underline,
+      Code.configure({
+        HTMLAttributes: {
+          class: "prose-code:{utility}",
+        },
+      }),
       Placeholder.configure({
         placeholder: "Type something",
       }),

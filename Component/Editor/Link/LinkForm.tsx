@@ -1,5 +1,5 @@
 import { FC, useState, useEffect } from "react";
-import { useToolbarUtils } from "../../../Hooks";
+import { useEditorContext } from "../../../Hooks";
 interface LinkFormProps {
   visible: boolean;
   onVisible: (arg: boolean) => void;
@@ -18,12 +18,11 @@ const LinkForm: FC<LinkFormProps> = ({
   handleSubmit,
 }): JSX.Element | null => {
   const [linkState, setLinkState] = useState<LinkOption>(DefaultState);
-  const { validateUrl, editor } = useToolbarUtils();
+  const { validateUrl, editor } = useEditorContext();
   const handleClickSubmit = () => {
     const { url, openInWeb } = linkState;
     if (!url.trim() || !editor) return;
     if (handleSubmit) {
-      console.log(url);
       handleSubmit({ url, openInWeb });
     } else {
       if (openInWeb) {
@@ -48,11 +47,11 @@ const LinkForm: FC<LinkFormProps> = ({
   if (!visible) return null;
 
   return (
-    <div className="rounded p-2 bg-colors-primary dark:bg-colors-secondary-dark">
+    <div className="rounded p-2 bg-primary dark:bg-secondary-dark">
       <input
         autoFocus
         type="text"
-        className="bg-transparent rounded border-2 border-colors-secondary-dark focus:border-colors-primary-dark dark:border-colors-primary-dark transition p-2 text-colors-primary-dark dark:text-colors-primary "
+        className="bg-transparent rounded border-2 border-secondary-dark focus:border-primary-dark dark:border-primary-dark transition p-2 text-primary-dark dark:text-primary "
         placeholder="https://example.com"
         value={linkState.url}
         onChange={(e) =>
@@ -69,7 +68,7 @@ const LinkForm: FC<LinkFormProps> = ({
           }
         />
         <label
-          className="dark:text-colors-primary text-colors-primary-dark"
+          className="dark:text-primary text-primary-dark"
           htmlFor="open-in-new-tab"
         >
           open in new tab
@@ -77,7 +76,7 @@ const LinkForm: FC<LinkFormProps> = ({
         <div className="flex-1 text-right">
           <button
             onClick={handleClickSubmit}
-            className="bg-colors-action px-2 py-1 text-colors-primary rounded text-sm"
+            className="bg-action px-2 py-1 text-primary rounded text-sm"
           >
             Apply
           </button>

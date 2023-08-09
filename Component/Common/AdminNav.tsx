@@ -28,14 +28,14 @@ const AdminNav: NextPage<PropsAdminNav> = (props) => {
   return (
     <nav
       ref={navRev}
-      className="h-screen w-12 shadow-sm bg-colors-secondary-light dark:bg-colors-secondary-dark flex flex-col justify-between  transition-width sticky top-0"
+      className="h-screen w-12 shadow-sm bg-secondary-light dark:bg-secondary-dark flex flex-col justify-between  transition-width sticky top-0"
     >
       <div>
         {/* logo */}
         <Link href="/admin">
           <a className="flex items-center space-x-2 p-3">
-            <Logo className="dark:fill-colors-highlight-dark fill-colors-highlight-light w-5 h-5" />
-            <span className="dark:fill-colors-highlight-dark fill-colors-highlight-light text-xl font-semibold">
+            <Logo className="dark:fill-highlight-dark fill-highlight-light w-5 h-5" />
+            <span className="dark:fill-highlight-dark fill-highlight-light text-xl font-semibold">
               {visible ? "Admin" : ""}
             </span>
           </a>
@@ -56,7 +56,7 @@ const AdminNav: NextPage<PropsAdminNav> = (props) => {
       {/* nav toggler button */}
       <button
         onClick={handleNavigation}
-        className="text-colors-highlight-light dark:text-colors-highlight-dark p-3 self-end min-w-fit"
+        className="text-highlight-light dark:text-highlight-dark p-3 self-end min-w-fit"
       >
         {visible ? (
           <RiMenuFoldFill size={23} />
@@ -76,7 +76,7 @@ interface InNavIcon {
 const NavIcon: FC<InNavIcon> = ({ href, Icon, desc, toggle }): JSX.Element => {
   return (
     <Link href={href}>
-      <a className="flex  items-center dark:fill-colors-highlight-dark fill-colors-highlight-light text-xl p-3 hover:scale-[0.98] transition min-w-fit ">
+      <a className="flex  items-center dark:fill-highlight-dark fill-highlight-light text-xl p-3 hover:scale-[0.98] transition min-w-fit ">
         <Icon size={24} className="" />
         <span className="">{toggle ? desc : ""}</span>
       </a>

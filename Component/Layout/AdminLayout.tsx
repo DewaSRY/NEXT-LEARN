@@ -1,5 +1,5 @@
 import { ReactNode, FC } from "react";
-import AdminNav from "./AdminNav";
+import AdminNav from "../Common/AdminNav";
 import Link from "next/link";
 import {
   AiOutlineDashboard,
@@ -39,8 +39,8 @@ const AdminLayout: FC<PropsAdminLayout> = ({ children }) => {
     <div className=" flex ">
       <AdminNav navItem={NavItems} />
       <div className="flex-1 p-4">{children}</div>
-      <Link href="/admin/post/create">
-        <a className="bg-colors-primary-light dark:bg-colors-secondary-dark text-colors-highlight-light dark:text-colors-highlight-dark fixed z-10  right-10 bottom-10  p-3 rounded-full hover:scale-95 shadow-sm transition">
+      <Link href="/admin/posts/create">
+        <a className="bg-primary-light dark:bg-secondary-dark text-highlight-light dark:text-highlight-dark fixed z-10  right-10 bottom-10  p-3 rounded-full hover:scale-95 shadow-sm transition">
           <AiOutlineFileAdd size={25} />
         </a>
       </Link>

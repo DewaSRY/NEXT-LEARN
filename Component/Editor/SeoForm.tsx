@@ -1,6 +1,12 @@
-import { ChangeEventHandler, FC, useEffect, useState } from "react";
-import slugify from "slugify";
-
+import {
+  ChangeEventHandler,
+  FC,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
+// import slugify from "slugify";
+import { FinalPost } from "./index";
 export interface SeoResult {
   meta: string;
   slug: string;
@@ -9,8 +15,9 @@ export interface SeoResult {
 
 interface Props {
   initialValue?: SeoResult;
-  title?: string;
-  onChange(result: SeoResult): void;
+  value: FinalPost;
+  setValue: Dispatch<SetStateAction<FinalPost>>;
+  handleChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
 }
 
 const commonInput =
@@ -18,39 +25,15 @@ const commonInput =
 
 const SEOForm: FC<Props> = ({
   initialValue,
-  title = "",
-  onChange,
+  value,
+  setValue,
+  handleChange,
 }): JSX.Element => {
-  const [values, setValues] = useState({ meta: "", slug: "", tags: "" });
+  const { meta, slug, tags } = value;
 
-  const handleChange: ChangeEventHandler<
-    HTMLTextAreaElement | HTMLInputElement
-  > = ({ target }) => {
-    let { name, value } = target;
-    if (name === "meta") value = value.substring(0, 150);
-    const newValues = { ...values, [name]: value };
-    setValues(newValues);
-    onChange(newValues);
-  };
-
-  useEffect(() => {
-    const slug = slugify(title.toLowerCase());
-    const newValues = { ...values, slug };
-    setValues(newValues);
-    onChange(newValues);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [title]);
-
-  useEffect(() => {
-    if (initialValue) {
-      setValues({ ...initialValue, slug: slugify(initialValue.slug) });
-    }
-  }, [initialValue]);
-
-  const { meta, slug, tags } = values;
   return (
     <div className="space-y-4">
-      <h1 className="text-colors-primary-dark dark:text-colors-primary text-xl font-semibold">
+      <h1 className="text-primary-dark dark:text-primary text-xl font-semibold">
         SEO Section
       </h1>
       <Input
@@ -75,7 +58,7 @@ const SEOForm: FC<Props> = ({
           className={commonInput + "text-lg h-20 resize-none"}
           placeholder="Meta description 150 characters will be fine"
         ></textarea>
-        <p className="absolute bottom-3 right-3 text-colors-primary-dark dark:text-colors-primary text-sm">
+        <p className="absolute bottom-3 right-3 text-primary-dark dark:text-primary text-sm">
           {meta.length}/150
         </p>
       </div>
@@ -92,7 +75,7 @@ const Input: FC<{
 }> = ({ name, value, placeholder, label, onChange }) => {
   return (
     <label className="block relative">
-      <span className="absolute top-1/2 -translate-y-1/2 text-sm font-semibold text-colors-primary-dark dark:text-colors-primary pl-2">
+      <span className="absolute top-1/2 -translate-y-1/2 text-sm font-semibold text-primary-dark dark:text-primary pl-2">
         {label}
       </span>
       <input

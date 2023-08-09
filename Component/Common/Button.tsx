@@ -22,13 +22,13 @@ const Button: FC<ButtonProps> = ({
 }): JSX.Element => {
   const getActiveStyle = useCallback(() => {
     if (active) {
-      return " dark:bg-colors-primary dark:text-colors-primary-dark bg-colors-primary-dark ";
+      return "dark:bg-primary dark:text-primary-dark bg-primary-dark text-primary  ";
     } else {
-      return " text-colors-secondary-light bg-colors-secondary-dark ";
+      return "text-secondary-light bg-secondary-dark ";
     }
   }, [active]);
   const commonClasses =
-    "p-2 rounded m-1 text-lg hover:scale-110 hover:shadow-md transition ";
+    "p-2 rounded text-lg hover:scale-110 hover:shadow-md transition m-2 ";
   return (
     <button {...rest} className={commonClasses + getActiveStyle()}>
       {children}

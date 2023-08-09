@@ -22,7 +22,7 @@ const DropDownOption: FC<DropDownOptionProps> = ({
     >
       {Head}
       {showOption && (
-        <div className="min-w-max absolute  mt-4 left-0 top-1  z-10 border-2 border-colors-primary-dark dark:border-colors-primary text-left bg-colors-primary dark:bg-colors-secondary-dark">
+        <div className="min-w-max absolute  mt-4 left-0 top-1  z-10 border-2 border-primary-dark dark:border-primary text-left bg-primary dark:bg-secondary-dark">
           <ul className="p-3 space-y-3">
             {option.map((option, id) => {
               return (

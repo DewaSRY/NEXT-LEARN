@@ -3,10 +3,10 @@ import { FC } from "react";
 import DropDownOption from "../../DropDownOption";
 import Button from "../../Common/Button";
 import GalleryModal from "../GalleryModal";
-import { useToolbarUtils } from "../../../Hooks/Use-ToolbarUtils";
+import { useEditorContext } from "../../../Hooks/Use-EditorContext";
 interface ToolbarProps {}
 const Toolbar: FC<ToolbarProps> = ({}): JSX.Element | null => {
-  const { userOption, toolIcons, Head } = useToolbarUtils();
+  const { userOption, toolIcons, Head } = useEditorContext();
   return (
     <>
       <div className="flex items-center">

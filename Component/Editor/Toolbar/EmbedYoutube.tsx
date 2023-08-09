@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 import { BsYoutube } from "react-icons/bs";
 import Button from "../../Common/Button";
 import ActionButton from "../../Common/ActionButton";
-import { useToolbarUtils } from "../../../Hooks";
+import { useEditorContext } from "../../../Hooks";
 interface Props {
   //   onSubmit(link: string): void;
 }
@@ -10,7 +10,7 @@ interface Props {
 const EmbedYoutube: FC<Props> = (): JSX.Element => {
   const [url, setUrl] = useState("");
   const [visible, setVisible] = useState(false);
-  const { cainsEditor } = useToolbarUtils();
+  const { cainsEditor } = useEditorContext();
 
   const handleSubmit = () => {
     if (!url.trim()) return hideForm();
@@ -28,7 +28,7 @@ const EmbedYoutube: FC<Props> = (): JSX.Element => {
       onKeyDown={({ key }) => {
         if (key === "Escape") hideForm();
       }}
-      className="relative bg-colors-secondary dark:bg-colors-primary-dark"
+      className="relative bg-secondary dark:bg-primary-dark"
     >
       <Button onClick={visible ? hideForm : showForm}>
         <BsYoutube />
@@ -40,7 +40,7 @@ const EmbedYoutube: FC<Props> = (): JSX.Element => {
             <input
               autoFocus
               type="text"
-              className="bg-transparent rounded border-2 border-colors-secondary-dark focus:border-colors-primary-dark dark:focus:border-colors-primary transition p-2 text-colors-primary-dark dark:text-colors-primary"
+              className="bg-transparent rounded border-2 border-secondary-dark focus:border-primary-dark dark:focus:border-primary transition p-2 text-primary-dark dark:text-primary"
               placeholder="https://youtube.com"
               value={url}
               onChange={({ target }) => setUrl(target.value)}

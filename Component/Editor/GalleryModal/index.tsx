@@ -4,7 +4,7 @@ import { AiOutlineCloudUpload } from "react-icons/ai";
 import ActionButton from "../../Common/ActionButton";
 import ModalContainer, { ModalProps } from "../../Common/ModalContainer";
 import Gallery from "./Gallery";
-import { useToolbarUtils, useGalleryContext } from "../../../Hooks";
+import { useEditorContext, useGalleryContext } from "../../../Hooks";
 export interface ImageSelectionResult {
   src: string;
   altText: string;
@@ -13,10 +13,9 @@ export interface ImageSelectionResult {
 interface Props {}
 
 const GalleryModal: FC<Props> = ({}): JSX.Element => {
-  const { editor } = useToolbarUtils();
+  const { editor } = useEditorContext();
   const { onClose, showGallery, handleImageUpload } = useGalleryContext();
   const [selectedImage, setSelectedImage] = useState("");
-  console.log(selectedImage);
   const [altText, setAltText] = useState("");
   const handleImageSelection = (result: ImageSelectionResult) => {
     editor
@@ -43,7 +42,7 @@ const GalleryModal: FC<Props> = ({}): JSX.Element => {
 
   return (
     <ModalContainer visible={showGallery} onClose={onClose}>
-      <div className="max-w-4xl p-2 bg-colors-primary-dark dark:bg-colors-primary rounded">
+      <div className="max-w-4xl p-2 bg-primary-dark dark:bg-primary rounded">
         <div className="flex">
           {/* gallery */}
           <div className="basis-[75%] max-h-[450px] overflow-y-auto custom-scroll-bar">
@@ -64,16 +63,16 @@ const GalleryModal: FC<Props> = ({}): JSX.Element => {
                   id="image-input"
                 />
                 <label htmlFor="image-input">
-                  <div className="w-full border-2 border-colors-action text-action flex items-center justify-center space-x-2 p-2 cursor-pointer rounded">
-                    <AiOutlineCloudUpload className="text-colors-action" />
-                    <span className="text-colors-primary">Upload Image</span>
+                  <div className="w-full border-2 border-action text-action flex items-center justify-center space-x-2 p-2 cursor-pointer rounded">
+                    <AiOutlineCloudUpload className="text-action" />
+                    <span className="text-primary">Upload Image</span>
                   </div>
                 </label>
               </div>
               {selectedImage ? (
                 <>
                   <textarea
-                    className="resize-none w-full bg-transparent rounded border-2 border-colors-secondary-dark focus:ring-1 text-colors-primary dark:text-colors-primary-dark h-32 p-1"
+                    className="resize-none w-full bg-transparent rounded border-2 border-secondary-dark focus:ring-1 text-primary dark:text-primary-dark h-32 p-1"
                     placeholder="Alt text"
                     value={altText}
                     onChange={({ target }) => setAltText(target.value)}

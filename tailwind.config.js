@@ -10,19 +10,17 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        colors: {
-          "primary-dark": "#1f1f1f",
-          primary: "#ffffff",
-          highlight: {
-            dark: "#FFFFFF",
-            light: "#1f1f1f",
-          },
-          secondary: {
-            dark: "#707070",
-            light: "#e6e6e6",
-          },
-          action: "#3B82F6",
+        "primary-dark": "#1f1f1f",
+        primary: "#ffffff",
+        highlight: {
+          dark: "#FFFFFF",
+          light: "#1f1f1f",
         },
+        secondary: {
+          dark: "#707070",
+          light: "#e6e6e6",
+        },
+        action: "#3B82F6",
       },
       transitionProperty: {
         width: "width",
@@ -32,8 +30,5 @@ module.exports = {
       "png-pattern": "url('/empty-bg.jpg')",
     },
   },
-  plugins: [
-    require("@tailwindcss/typography"),
-    require("@tailwindcss/typography"),
-  ],
+  plugins: [require("@tailwindcss/typography")],
 };

@@ -11,10 +11,9 @@ export const readFile = (req: NextApiRequest): Promise<FormidablePromise> => {
   const form = formidable();
   return new Promise((resolve, reject) => {
     form.parse(req, (err, fields, files) => {
-      console.log(err);
       if (err) reject(err);
-
-      const imageFile = files.image[0] as any;
+      const filesType = files.image as formidable.File;
+      const imageFile = filesType[0] as File[];
       const filePath = imageFile["filepath"];
       resolve({ files, body: fields, filePath });
     });

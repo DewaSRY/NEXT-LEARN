@@ -1,9 +1,10 @@
 import { FC, ChangeEventHandler, useState, useEffect } from "react";
 import { EditorContent } from "@tiptap/react";
 import SEOForm, { SeoResult } from "./SeoForm";
-import { useToolbarUtils } from "../../Hooks";
+import { useEditorContext } from "../../Hooks";
 import ThumbnailSelector from "./ThumbnailSelector";
 import ActionButton from "../Common/ActionButton";
+import slugify from "slugify";
 interface EditorProps {
   initialValue?: FinalPost;
   onSubmit(post: FinalPost): void;
@@ -12,16 +13,17 @@ export interface FinalPost extends SeoResult {
   title: string;
   content: string;
   thumbnail?: File | string;
+  meta: string;
+  tags: string;
+  slug: string;
 }
-
 import Toolbar from "./Toolbar";
 import EditLink from "./Link/EditLink";
 const Editor: FC<EditorProps> = ({
   initialValue,
   onSubmit,
 }): JSX.Element | null => {
-  const { editor } = useToolbarUtils();
-  const [seoInitialValue, setSeoInitialValue] = useState<SeoResult>();
+  const { editor } = useEditorContext();
   const [post, setPost] = useState<FinalPost>({
     title: "",
     content: "",
@@ -29,58 +31,64 @@ const Editor: FC<EditorProps> = ({
     tags: "",
     slug: "",
   });
-  const updateSeoValue = (result: SeoResult) => setPost({ ...post, ...result });
-  const updateTitle: ChangeEventHandler<HTMLInputElement> = ({ target }) =>
-    setPost({ ...post, title: target.value });
+  const handleChange: ChangeEventHandler<
+    HTMLTextAreaElement | HTMLInputElement
+  > = ({ target }) => {
+    let { name, value } = target;
+    if (name === "meta") value = value.substring(0, 150);
+    setPost((prev) => ({ ...prev, [name]: value }));
+  };
   const updateThumbnail = (file: File) => setPost({ ...post, thumbnail: file });
   const handleSubmit = () => {
     if (!editor) return;
     onSubmit({ ...post, content: editor.getHTML() });
   };
+
   useEffect(() => {
     if (initialValue) {
-      setPost({ ...initialValue });
+      setPost({ ...initialValue, slug: slugify(initialValue.slug) });
       editor?.commands.setContent(initialValue.content);
-      const { meta, slug, tags } = initialValue;
-      setSeoInitialValue({ meta, slug, tags });
     }
   }, [initialValue, editor]);
-
+  useEffect(() => {
+    const slug = slugify(post.title.toLowerCase());
+    setPost((prev) => ({ ...prev, slug }));
+  }, [post.title]);
   if (!editor) return null;
 
   return (
     <>
-      <div className="max-w-4xl mx-auto p-3 dark:bg-colors-primary-dark bg-colors-primary transition">
+      <div className="max-w-4xl mx-auto p-3 dark:bg-primary-dark bg-primary transition">
         {/* Thumbnail Selector and Submit Button */}
-        <div className="sticky top-0 z-10 dark:bg-colors-primary-dark bg-colors-primary">
+        <div className="sticky top-0 z-10 dark:bg-primary-dark bg-primary">
           <div className="flex items-center justify-between mb-3">
             <ThumbnailSelector
               initialValue={post.thumbnail as string}
               onChange={updateThumbnail}
             />
             <div className="inline-block">
-              <ActionButton title="submit" onClick={handleSubmit} />
+              <ActionButton title="Submit" onClick={handleSubmit} />
             </div>
           </div>
           <input
             type="text"
-            className="py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-colors-secondary-dark dark:border-colors-secondary-light text-3xl font-semibold italic text-colors-primary-dark dark:text-primary mb-3"
+            className="py-2 outline-none bg-transparent w-full border-0 border-b-[1px] border-secondary-dark dark:border-secondary-light text-3xl font-semibold italic text-primary-dark dark:text-primary mb-3"
             placeholder="Title"
-            onChange={updateTitle}
+            onChange={handleChange}
             value={post.title}
+            name="title"
           />
           <Toolbar />
-          <div className="h-[1px] w-full bg-colors-secondary-dark dark:bg-colors-secondary-light my-3" />
-
+          <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
           <EditLink />
         </div>
         <EditorContent editor={editor} className="min-h-[300px]" />
-
-        <div className="h-[1px] w-full bg-colors-secondary-dark dark:bg-colors-secondary-light my-3" />
+        <div className="h-[1px] w-full bg-secondary-dark dark:bg-secondary-light my-3" />
         <SEOForm
-          onChange={updateSeoValue}
-          title={post.title}
-          initialValue={seoInitialValue}
+          setValue={setPost}
+          value={post}
+          // initialValue={seoInitialValue}
+          handleChange={handleChange}
         />
       </div>
     </>
