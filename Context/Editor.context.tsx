@@ -9,12 +9,19 @@ import TipTapImage from "@tiptap/extension-image";
 import Code from "@tiptap/extension-code";
 interface EditorContextProps {
   readonly editor: Editor | null;
+  placeholder?: string;
 }
 export const EditorContext = createContext<EditorContextProps>(
   {} as EditorContextProps
 );
 export const EditorProvider = ({ children }: PropsWithChildren) => {
   const [selectionRange, setSelectionRange] = useState<Range>();
+
+  // const getPlaceHolder=(arg?:string)=>{
+  //   if(arg)    return arg
+  //   return ""
+
+  // }
   const editor = useEditor({
     extensions: [
       StarterKit,

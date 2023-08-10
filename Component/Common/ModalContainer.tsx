@@ -1,7 +1,7 @@
 import { FC, ReactNode, useCallback, useEffect, useId } from "react";
 
 export interface ModalProps {
-  visible: boolean;
+  visible?: boolean;
   onClose(): void;
 }
 

@@ -14,6 +14,35 @@ import { generateFormData } from "../../../../Utils";
 interface PostResponse extends FinalPost {
   id: string;
 }
+interface ServerSideResponse {
+  post: PostResponse;
+}
+export const getServerSideProps: GetServerSideProps<
+  ServerSideResponse
+> = async (context) => {
+  try {
+    const slug = context.query.slug as string;
+    await dbConnect();
+    const post = await Post.findOne({ slug });
+    if (!post) return { notFound: true };
+    const { _id, meta, title, content, thumbnail, tags } = post;
+    return {
+      props: {
+        post: {
+          id: _id.toString(),
+          title,
+          content,
+          tags: tags.join(", "),
+          thumbnail: thumbnail?.url || "",
+          slug,
+          meta,
+        },
+      },
+    };
+  } catch (error) {
+    return { notFound: true };
+  }
+};
 
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
 
@@ -24,7 +53,6 @@ const Update: NextPage<Props> = ({ post }) => {
     try {
       // we have to generate FormData
       const formData = generateFormData(post);
-
       // submit our post
       const { data } = await axios.patch("/api/posts/" + post.id, formData);
       console.log(data);
@@ -46,39 +74,6 @@ const Update: NextPage<Props> = ({ post }) => {
       </div>
     </AdminLayout>
   );
-};
-
-interface ServerSideResponse {
-  post: PostResponse;
-}
-export const getServerSideProps: GetServerSideProps<
-  ServerSideResponse
-> = async (context) => {
-  try {
-    const slug = context.query.slug as string;
-
-    await dbConnect();
-    const post = await Post.findOne({ slug });
-    if (!post) return { notFound: true };
-
-    const { _id, meta, title, content, thumbnail, tags } = post;
-
-    return {
-      props: {
-        post: {
-          id: _id.toString(),
-          title,
-          content,
-          tags: tags.join(", "),
-          thumbnail: thumbnail?.url || "",
-          slug,
-          meta,
-        },
-      },
-    };
-  } catch (error) {
-    return { notFound: true };
-  }
 };
 
 export default Update;

@@ -10,7 +10,7 @@ const nextConfig = {
   images: {
     loader: "akamai",
     path: "",
-    domains: ["images.unsplash.com", "res.cloudinary.com"],
+    domains: ["images.unsplash.com", "res.cloudinary.com", "images.pexels.com"],
 
     // remotePatterns: [
     //   {

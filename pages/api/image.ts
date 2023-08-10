@@ -22,8 +22,11 @@ const handler: NextApiHandler = (req, res) => {
 
 const uploadNewImage: NextApiHandler = async (req, res) => {
   try {
-    const { filePath } = await readFile(req);
-    // const imageFile = files.image as formidable.File;
+    const { files } = await readFile(req);
+    const filesType = files.image as formidable.File[];
+    const filePath = filesType[0].filepath;
+    if (!filePath)
+      return res.status(500).json({ err: "failed to read the File" });
     const { secure_url: url } = await cloudinary.uploader.upload(filePath, {
       folder: "dev-blogs",
       public_id: ` ${Date.now()}`,

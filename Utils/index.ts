@@ -6,8 +6,9 @@ export const generateFormData = (post: FinalPost) => {
     if (key === "tags" && value.trim()) {
       const tags = value.split(",").map((tag: string) => tag.trim());
       formData.append("tags", JSON.stringify(tags));
-    } else formData.append(key, value);
+    } else {
+      formData.append(key, value);
+    }
   }
-
   return formData;
 };

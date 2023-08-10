@@ -39,7 +39,11 @@ const ThumbnailSelector: FC<Props> = ({
         {selectedThumbnail ? (
           <Image
             src={selectedThumbnail}
-            alt=""
+            alt="thumbnail"
+            objectFit="cover"
+            // layout="fill"
+            width={400}
+            height={250}
             className={commonClass + "object-cover"}
           />
         ) : (

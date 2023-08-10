@@ -1,12 +1,12 @@
-import { FC, useState } from "react";
+import { FC, useState, ReactNode } from "react";
 
-interface Option {
+export interface Option {
   label: string;
   onClick: () => void;
 }
 interface DropDownOptionProps {
   option: Option[];
-  Head: JSX.Element;
+  Head: ReactNode;
 }
 
 const DropDownOption: FC<DropDownOptionProps> = ({

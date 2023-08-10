@@ -1,6 +1,6 @@
 import { FC } from "react";
-// import Image from "next/image";
-import NextImage from "next/image";
+import Image from "next/image";
+// import NextImage from "next/image";
 import CheckMark from "../../Common/CheckMark";
 type Props = {
   src: string;
@@ -13,7 +13,7 @@ const GalleryImages: FC<Props> = ({ src, selected, onClick }): JSX.Element => {
       onClick={onClick}
       className="relative rounded overflow-hidden cursor-pointer"
     >
-      <NextImage
+      <Image
         src={src}
         width={200}
         height={200}
