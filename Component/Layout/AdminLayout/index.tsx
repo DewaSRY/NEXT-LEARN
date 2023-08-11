@@ -1,8 +1,7 @@
 import { ReactNode, FC } from "react";
-import AdminNav, { NavOptions } from "../nav/AdminNav";
-
-import AppHead from "../Common/AppHead";
-import AdminSecondaryNav from "../nav/AdminSecondaryNav";
+import AdminNav, { NavOptions } from "./AdminNav";
+import AppHead from "./AppHead";
+import AdminSecondaryNav from "./AdminSecondaryNav";
 import Link from "next/link";
 import {
   AiOutlineDashboard,

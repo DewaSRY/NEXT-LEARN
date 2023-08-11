@@ -55,7 +55,6 @@ const Update: NextPage<Props> = ({ post }) => {
       const formData = generateFormData(post);
       // submit our post
       const { data } = await axios.patch("/api/posts/" + post.id, formData);
-      console.log(data);
     } catch (error: any) {
       console.log(error.response.data);
     }
@@ -63,16 +62,14 @@ const Update: NextPage<Props> = ({ post }) => {
   };
 
   return (
-    <AdminLayout title="Update">
-      <div className="max-w-4xl mx-auto">
-        <Editor
-          initialValue={post}
-          onSubmit={handleSubmit}
-          busy={updating}
-          btnTitle="Update"
-        />
-      </div>
-    </AdminLayout>
+    <div className="max-w-4xl mx-auto">
+      <Editor
+        initialValue={post}
+        onSubmit={handleSubmit}
+        busy={updating}
+        btnTitle="Update"
+      />
+    </div>
   );
 };
 

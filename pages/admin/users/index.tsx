@@ -3,7 +3,6 @@ import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import LatesUserTable from "../../../Component/admin/LatesUserTable";
 import PageNavigator from "../../../Component/Common/PageNavigator";
-import AdminLayout from "../../../Component/Layout/AdminLayout";
 import { LatestUserProfile } from "../../../Utils/types";
 
 interface Props {}
@@ -44,7 +43,6 @@ const Users: NextPage<Props> = () => {
   useEffect(fetchAllUsers, []);
 
   return (
-    // <AdminLayout>
     <>
       <h1 className="text-2xl dark:text-primary text-primary-dark font-semibold py-2 transition">
         Users
@@ -57,7 +55,6 @@ const Users: NextPage<Props> = () => {
         />
       </div>
     </>
-    // </AdminLayout>
   );
 };
 

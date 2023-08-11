@@ -2,7 +2,7 @@ import Link from "next/link";
 import { FC, useEffect, useRef, useState } from "react";
 import { IconType } from "react-icons";
 import { RiMenuFoldFill, RiMenuUnfoldFill } from "react-icons/ri";
-import Logo from "../../assets/Logo";
+import Logo from "../../../assets/Logo";
 
 enum AdminNavStyle {
   nav = "h-screen w-12 shadow-sm bg-secondary-light dark:bg-secondary-dark flex flex-col justify-between transition-width overflow-hidden sticky top-0",

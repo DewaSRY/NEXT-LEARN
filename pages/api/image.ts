@@ -2,14 +2,11 @@ import { NextApiHandler } from "next";
 import formidable from "formidable";
 import cloudinary from "../../lib/cloudinary";
 import { readFile } from "../../lib/utils";
-
 export const config = {
   api: { bodyParser: false },
 };
-
 const handler: NextApiHandler = (req, res) => {
   const { method } = req;
-
   switch (method) {
     case "POST":
       return uploadNewImage(req, res);
@@ -19,7 +16,6 @@ const handler: NextApiHandler = (req, res) => {
       return res.status(404).send("Not found!");
   }
 };
-
 const uploadNewImage: NextApiHandler = async (req, res) => {
   try {
     const { files } = await readFile(req);
@@ -32,13 +28,11 @@ const uploadNewImage: NextApiHandler = async (req, res) => {
       public_id: ` ${Date.now()}`,
       resource_type: "auto",
     });
-
     res.json({ src: url });
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
 };
-
 const readAllImages: NextApiHandler = async (req, res) => {
   try {
     const { resources } = await cloudinary.api.resources({
@@ -46,7 +40,6 @@ const readAllImages: NextApiHandler = async (req, res) => {
       type: "upload",
       prefix: "dev-blogs",
     });
-
     const images = resources.map(({ secure_url }: any) => ({
       src: secure_url,
     }));
@@ -55,5 +48,4 @@ const readAllImages: NextApiHandler = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
 export default handler;

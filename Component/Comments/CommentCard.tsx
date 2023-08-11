@@ -1,5 +1,5 @@
 import { FC, ReactNode, useState } from "react";
-import ProfileIcon from "./ProfileIcon";
+import ProfileIcon from "../Layout/nav/ProfileIcon";
 import dateFormat from "dateformat";
 import parse from "html-react-parser";
 import {

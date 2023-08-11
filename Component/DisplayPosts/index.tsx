@@ -2,7 +2,7 @@ import axios from "axios";
 import { FC, ReactNode, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { PostDetail } from "../../Utils/types";
-import ConfirmModal from "./ConfirmModal";
+import ConfirmModal from "../Common/ConfirmModal";
 import PostCard from "./PostCard";
 interface Props {
   posts: PostDetail[];
@@ -13,7 +13,7 @@ interface Props {
   loader?: ReactNode;
   onPostRemoved(post: PostDetail): void;
 }
-const InfiniteScrollPosts: FC<Props> = ({
+const DisplayPosts: FC<Props> = ({
   posts,
   showControls,
   hasMore,
@@ -81,4 +81,4 @@ const InfiniteScrollPosts: FC<Props> = ({
   );
 };
 
-export default InfiniteScrollPosts;
+export default DisplayPosts;

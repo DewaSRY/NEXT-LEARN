@@ -9,23 +9,17 @@ import {
 import Comment from "../../../Models/Comment";
 import Post from "../../../Models/posts";
 import { CommentResponse } from "../../../Utils/types";
-
 const handler: NextApiHandler = (req, res) => {
   const { method } = req;
-
   switch (method) {
     case "POST":
       return createNewComment(req, res);
-
     case "DELETE":
       return removeComment(req, res);
-
     case "PATCH":
       return updateComment(req, res);
-
     case "GET":
       return readComments(req, res);
-
     default:
       res.status(404).send("Not found!");
   }

@@ -2,7 +2,7 @@ import { FC } from "react";
 import { BsBoxArrowUpRight } from "react-icons/bs";
 import parse from "html-react-parser";
 import { trimText } from "../../Utils/helper";
-import ProfileIcon from "../Common/ProfileIcon";
+import ProfileIcon from "../Layout/nav/ProfileIcon";
 import { LatestComment } from "../../Utils/types";
 interface Props {
   comment: LatestComment;

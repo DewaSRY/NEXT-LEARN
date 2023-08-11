@@ -2,7 +2,7 @@ import { EditorContent } from "@tiptap/react";
 import { FC, useEffect } from "react";
 import { useEditorContext } from "../../Hooks";
 
-import ActionButton from "./ActionButton";
+import ActionButton from "../Common/ActionButton";
 
 interface Props {
   title?: string;

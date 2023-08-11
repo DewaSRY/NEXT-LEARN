@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
-import AppHead from "../Common/AppHead";
-import UserNav from "../nav/UserNav";
+import AppHead from "./AdminLayout/AppHead";
+import UserNav from "./nav/UserNav";
 
 interface Props {
   title?: string;

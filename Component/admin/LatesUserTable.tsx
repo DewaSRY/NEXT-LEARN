@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { LatestUserProfile } from "../../Utils/types";
-import ProfileIcon from "../Common/ProfileIcon";
+import ProfileIcon from "../Layout/nav/ProfileIcon";
 
 interface Props {
   users?: LatestUserProfile[];

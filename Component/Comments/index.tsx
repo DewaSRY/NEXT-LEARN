@@ -5,8 +5,8 @@ import { CommentResponse } from "../../Utils/types";
 import { GitHubAuthButton } from "../button";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
-import ConfirmModal from "./ConfirmModal";
-import PageNavigator from "./PageNavigator";
+import ConfirmModal from "../Common/ConfirmModal";
+import PageNavigator from "../Common/PageNavigator";
 
 interface Props {
   belongsTo?: string;
@@ -22,13 +22,10 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   const [reachedToEnd, setReachedToEnd] = useState(false);
   const [commentToDelete, setCommentToDelete] =
     useState<CommentResponse | null>(null);
-
   const userProfile = useAuth();
-
   const insertNewReplyComments = (reply: CommentResponse) => {
     if (!comments) return;
     let updatedComments = [...comments];
-
     const chiefCommentIndex = updatedComments.findIndex(
       ({ id }) => id === reply.repliedTo
     );
@@ -38,10 +35,8 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
     } else {
       updatedComments[chiefCommentIndex].replies = [reply];
     }
-
     setComments([...updatedComments]);
   };
-
   const updateEditedComment = (newComment: CommentResponse) => {
     if (!comments) return;
     let updatedComments = [...comments];
@@ -163,19 +158,16 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
       .then(({ data }) => updateLikedComments(data.comment))
       .catch((err) => console.log(err));
   };
-
   // fetching all comments
   const fetchAllComments = async (pageNo = currentPageNo) => {
     try {
       const { data } = await axios(
         `/api/comment/all?pageNo=${pageNo}&limit=${limit}`
       );
-
       if (!data.comments.length) {
         currentPageNo -= 1;
         return setReachedToEnd(true);
       }
-
       setComments(data.comments);
     } catch (error) {
       console.log(error);

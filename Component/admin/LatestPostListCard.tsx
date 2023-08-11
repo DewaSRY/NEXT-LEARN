@@ -34,7 +34,6 @@ const LatestPostListCard: FC<Props> = ({
           Delete
         </button>
       </div>
-
       <hr className="mt-2" />
     </div>
   );

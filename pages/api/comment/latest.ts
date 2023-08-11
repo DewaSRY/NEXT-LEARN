@@ -9,19 +9,15 @@ import { formatComment, isAdmin, isAuth } from "../../../lib/utils";
 import Comment from "../../../Models/Comment";
 import Post from "../../../Models/posts";
 import { CommentResponse, LatestComment } from "../../../Utils/types";
-
 const handler: NextApiHandler = (req, res) => {
   const { method } = req;
-
   switch (method) {
     case "GET":
       return readLatestComments(req, res);
-
     default:
       res.status(404).send("Not found!");
   }
 };
-
 const readLatestComments: NextApiHandler = async (req, res) => {
   const admin = await isAdmin(req, res);
   if (!admin) return res.status(403).json({ error: "Unauthorized user!" });

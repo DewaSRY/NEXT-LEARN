@@ -1,71 +1,57 @@
-import axios from "axios";
+import { NextPage } from "next";
+import ContentWrapper from "../../Component/admin/ContentWrapper";
+import LatestPostListCard from "../../Component/admin/LatestPostListCard";
+import LatestCommentListCard from "../../Component/admin/LatestCommentListCard";
+import { useEffect, useState } from "react";
 import {
-  GetServerSideProps,
-  InferGetServerSidePropsType,
-  NextPage,
-} from "next";
-import { useState } from "react";
-import InfiniteScrollPosts from "../../Component/Common/InfiniteScrollPosts";
-import { formatPosts, readPostsFromDb } from "../../lib/utils";
-import { filterPosts, PostDetail } from "../../Utils";
-interface ServerSideResponse {
-  posts: PostDetail[];
-}
-export const getServerSideProps: GetServerSideProps<
-  ServerSideResponse
-> = async () => {
-  try {
-    // read posts
-    const posts = await readPostsFromDb(limit, pageNo);
-    // format posts
-    const formattedPosts = formatPosts(posts);
-    return {
-      props: {
-        posts: formattedPosts,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return { notFound: true };
-  }
-};
-type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
+  LatestComment,
+  LatestUserProfile,
+  PostDetail,
+} from "../../Utils/types";
+import axios from "axios";
+import LatesUserTable from "../../Component/admin/LatesUserTable";
 
-let pageNo = 0;
-const limit = 9;
+interface AdminProps {}
 
-const Posts: NextPage<Props> = ({ posts }) => {
-  const [postsToRender, setPostsToRender] = useState(posts);
-  const [hasMorePosts, setHasMorePosts] = useState(posts.length >= limit);
-  const fetchMorePosts = async () => {
-    try {
-      pageNo++;
-      const { data } = await axios(
-        `/api/posts?limit=${limit}&skip=${postsToRender.length}`
-      );
-      if (data.posts.length < limit) {
-        setPostsToRender([...postsToRender, ...data.posts]);
-        setHasMorePosts(false);
-      } else setPostsToRender([...postsToRender, ...data.posts]);
-    } catch (error) {
-      setHasMorePosts(false);
-      console.log(error);
-    }
-  };
+const Admin: NextPage<AdminProps> = () => {
+  const [latestPosts, setLatestPosts] = useState<PostDetail[]>();
+  const [latestComments, setLatestComments] = useState<LatestComment[]>();
+  const [latestUsers, setLatestUsers] = useState<LatestUserProfile[]>();
+  useEffect(() => {
+    axios("/api/posts?limit=5&skip=0")
+      .then(({ data }) => setLatestPosts(data.posts))
+      .catch((err) => console.log(err));
+    axios("/api/comment/latest")
+      .then(({ data }) => setLatestComments(data.comments))
+      .catch((err) => console.log(err));
+    axios("/api/user")
+      .then(({ data }) => setLatestUsers(data.users))
+      .catch((err) => console.log(err));
+  }, []);
   return (
     <>
-      <InfiniteScrollPosts
-        hasMore={hasMorePosts}
-        next={fetchMorePosts}
-        dataLength={postsToRender.length}
-        posts={postsToRender}
-        showControls
-        onPostRemoved={(post) =>
-          setPostsToRender(filterPosts(postsToRender, post))
-        }
-      />
+      <div className="flex space-x-10">
+        <ContentWrapper seeAllRoute="/admin/posts" title="latest Posts">
+          {latestPosts?.map((p, id) => (
+            <LatestPostListCard
+              key={id}
+              title={p.title}
+              slug={p.slug}
+              meta={p.meta}
+            />
+          ))}
+        </ContentWrapper>
+        <ContentWrapper seeAllRoute="/admin/comments" title="latest Comment">
+          {latestComments?.map((c, id) => (
+            <LatestCommentListCard key={id} comment={c} />
+          ))}
+        </ContentWrapper>
+      </div>
+      <ContentWrapper seeAllRoute="/admin/comments" title="latest Users">
+        <LatesUserTable users={latestUsers} />
+      </ContentWrapper>
     </>
   );
 };
 
-export default Posts;
+export default Admin;
