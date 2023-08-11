@@ -4,11 +4,9 @@ import parse from "html-react-parser";
 import { trimText } from "../../Utils/helper";
 import ProfileIcon from "../Common/ProfileIcon";
 import { LatestComment } from "../../Utils/types";
-
 interface Props {
   comment: LatestComment;
 }
-
 const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
   const { owner, belongsTo, content } = comment;
   return (
@@ -20,7 +18,6 @@ const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
           {owner.name}{" "}
           <span className="text-sm text-secondary-dark">commented on</span>
         </p>
-
         <a
           href={"/" + belongsTo.slug}
           target="_blank"
@@ -32,7 +29,6 @@ const LatestCommentListCard: FC<Props> = ({ comment }): JSX.Element => {
             {trimText(belongsTo.title, 30)}
           </div>
         </a>
-
         <div className="text-primary-dark dark:text-primary transition">
           {parse(content)}
         </div>

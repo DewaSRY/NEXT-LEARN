@@ -1,5 +1,5 @@
 import { NextApiHandler } from "next";
-import dbConnect from "../../../lib/Mongose.conect";
+import dbConnect from "../../../lib/Mongooses";
 import Joi from "joi";
 import { postValidationSchema, validateSchema } from "../../../lib/validator";
 import { formatPosts, readFile, readPostsFromDb } from "../../../lib/utils";

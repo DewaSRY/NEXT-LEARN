@@ -49,7 +49,6 @@ const Editor: FC<EditorProps> = ({
     if (!editor) return;
     onSubmit({ ...post, content: editor.getHTML() });
   };
-
   useEffect(() => {
     if (initialValue) {
       setPost({ ...initialValue, slug: slugify(initialValue.slug) });

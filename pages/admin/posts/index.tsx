@@ -40,18 +40,18 @@ const Posts: NextPage<Props> = ({ posts }) => {
 
   return (
     <>
-      <AdminLayout>
-        <InfiniteScrollPosts
-          hasMore={hasMorePosts}
-          next={fetchMorePosts}
-          dataLength={postsToRender.length}
-          posts={postsToRender}
-          showControls
-          onPostRemoved={(post) =>
-            setPostsToRender(filterPosts(postsToRender, post))
-          }
-        />
-      </AdminLayout>
+      {/* <AdminLayout> */}
+      <InfiniteScrollPosts
+        hasMore={hasMorePosts}
+        next={fetchMorePosts}
+        dataLength={postsToRender.length}
+        posts={postsToRender}
+        showControls
+        onPostRemoved={(post) =>
+          setPostsToRender(filterPosts(postsToRender, post))
+        }
+      />
+      {/* </AdminLayout> */}
     </>
   );
 };

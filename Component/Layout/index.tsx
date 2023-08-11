@@ -12,7 +12,6 @@ interface Props {
 const Layout: FC<Props> = ({ children, title, desc }): JSX.Element => {
   const { data } = useSession();
   const profile = (data?.user || {}) as any;
-
   if (profile.role === "admin")
     return <AdminLayout title={title}>{children}</AdminLayout>;
 

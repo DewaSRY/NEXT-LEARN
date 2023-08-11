@@ -23,11 +23,13 @@ const Create: NextPage<CreateProps> = () => {
   };
 
   return (
-    <AdminLayout title="New Post">
+    <>
+      {/* <AdminLayout title="New Post"> */}
       <div className="max-w-4xl mx-auto">
         <Editor btnTitle="Submit" onSubmit={handleSubmit} busy={creating} />
       </div>
-    </AdminLayout>
+      {/* </AdminLayout> */}
+    </>
   );
 };
 

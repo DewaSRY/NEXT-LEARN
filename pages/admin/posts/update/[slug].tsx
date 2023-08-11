@@ -7,7 +7,7 @@ import {
 import { useState } from "react";
 import Editor, { FinalPost } from "../../../../Component/Editor";
 import AdminLayout from "../../../../Component/Layout/AdminLayout";
-import dbConnect from "../../../../lib/Mongose.conect";
+import dbConnect from "../../../../lib/Mongooses";
 import Post from "../../../../Models/posts";
 import { generateFormData } from "../../../../Utils";
 

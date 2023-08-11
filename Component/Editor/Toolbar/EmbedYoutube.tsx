@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { BsYoutube } from "react-icons/bs";
-import Button from "../../Common/Button";
+import Button from "./Button";
 import ActionButton from "../../Common/ActionButton";
 import { useEditorContext } from "../../../Hooks";
 interface Props {

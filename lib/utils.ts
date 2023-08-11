@@ -1,7 +1,7 @@
 import formidable from "formidable";
 import { NextApiRequest, NextApiResponse } from "next";
 import Post, { PostModelSchema } from "../Models/posts";
-import dbConnect from "./Mongose.conect";
+import dbConnect from "./Mongooses";
 import { CommentResponse, PostDetail, UserProfile } from "../Utils/types";
 import { authOptions } from "../pages/api/auth/[...nextauth]";
 import { unstable_getServerSession } from "next-auth";

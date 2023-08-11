@@ -5,22 +5,35 @@ import type {
   InferGetServerSidePropsType,
   NextPage,
 } from "next";
-import AdminLayout from "../Component/Layout/AdminLayout";
 import InfiniteScrollPosts from "../Component/Common/InfiniteScrollPosts";
-import DefaultLayout from "../Component/Layout/DefaultLayout";
 import { formatPosts, readPostsFromDb } from "../lib/utils";
-import { PostDetail } from "../Utils/types";
-import { filterPosts } from "../Utils/helper";
+import { PostDetail, filterPosts } from "../Utils";
 import axios from "axios";
-
+interface ServerSideResponse {
+  posts: PostDetail[];
+}
+let pageNo = 0;
+const limit = 9;
+export const getServerSideProps: GetServerSideProps<
+  ServerSideResponse
+> = async () => {
+  try {
+    const posts = await readPostsFromDb(limit, pageNo);
+    const formattedPosts = formatPosts(posts);
+    return {
+      props: {
+        posts: formattedPosts,
+      },
+    };
+  } catch (error) {
+    console.log(error);
+    return { notFound: true };
+  }
+};
 type Props = InferGetServerSidePropsType<typeof getServerSideProps>;
-
 const Home: NextPage<Props> = ({ posts }) => {
   const [postsToRender, setPostsToRender] = useState(posts);
-  const [hasMorePosts, setHasMorePosts] = useState(true);
-
-  const isAdmin = false;
-
+  const [hasMorePosts, setHasMorePosts] = useState(posts.length >= limit);
   const fetchMorePosts = async () => {
     try {
       pageNo++;
@@ -36,49 +49,20 @@ const Home: NextPage<Props> = ({ posts }) => {
       console.log(error);
     }
   };
-
   return (
     <>
-      <AdminLayout>
-        <InfiniteScrollPosts
-          hasMore={hasMorePosts}
-          next={fetchMorePosts}
-          dataLength={postsToRender.length}
-          posts={postsToRender}
-          showControls
-          onPostRemoved={(post) =>
-            setPostsToRender(filterPosts(postsToRender, post))
-          }
-        />
-      </AdminLayout>
+      <InfiniteScrollPosts
+        hasMore={hasMorePosts}
+        next={fetchMorePosts}
+        dataLength={postsToRender.length}
+        posts={postsToRender}
+        showControls
+        onPostRemoved={(post) =>
+          setPostsToRender(filterPosts(postsToRender, post))
+        }
+      />
     </>
   );
-};
-
-interface ServerSideResponse {
-  posts: PostDetail[];
-}
-
-let pageNo = 0;
-const limit = 9;
-
-export const getServerSideProps: GetServerSideProps<
-  ServerSideResponse
-> = async () => {
-  try {
-    // read posts
-    const posts = await readPostsFromDb(limit, pageNo);
-    // format posts
-    const formattedPosts = formatPosts(posts);
-    return {
-      props: {
-        posts: formattedPosts,
-      },
-    };
-  } catch (error) {
-    console.log(error);
-    return { notFound: true };
-  }
 };
 
 export default Home;

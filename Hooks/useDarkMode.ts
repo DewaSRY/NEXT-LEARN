@@ -11,13 +11,11 @@ const useDarkMode = () => {
   const readThemeFromLs = () => {
     return localStorage.getItem(THEME_MODE) || "";
   };
-
   const updateTheme = (newTheme: string, previousTheme?: string) => {
     const { classList } = document.documentElement;
     if (previousTheme) classList.remove(previousTheme);
     classList.add(newTheme);
   };
-
   const toggleTheme = () => {
     const previousTheme = readThemeFromLs();
     const newTheme = previousTheme === defaultTheme ? darkTheme : defaultTheme;
@@ -30,7 +28,6 @@ const useDarkMode = () => {
     if (oldTheme) {
       return updateTheme(oldTheme);
     }
-
     const runningOnDarkMode = window.matchMedia(
       "(prefers-color-scheme: dark)"
     ).matches;

@@ -10,7 +10,6 @@ import {
 import CommentForm from "./CommentForm";
 import { CommentResponse } from "../../Utils/types";
 import LikeHeart from "./LikeHeart";
-
 interface Props {
   comment: CommentResponse;
   showControls?: boolean;
@@ -19,7 +18,6 @@ interface Props {
   onDeleteClick?(): void;
   onLikeClick?(): void;
 }
-
 const CommentCard: FC<Props> = ({
   comment,
   showControls = false,

@@ -8,7 +8,6 @@ interface DropDownOptionProps {
   option: Option[];
   Head: ReactNode;
 }
-
 const DropDownOption: FC<DropDownOptionProps> = ({
   option,
   Head,
@@ -22,12 +21,16 @@ const DropDownOption: FC<DropDownOptionProps> = ({
     >
       {Head}
       {showOption && (
-        <div className="min-w-max absolute  mt-4 left-0 top-1  z-10 border-2 border-primary-dark dark:border-primary text-left bg-primary dark:bg-secondary-dark">
+        <div className="min-w-max absolute top-full mt-4 right-2 z-40 border-2 border-primary-dark dark:border-primary rounded text-left bg-primary dark:bg-primary-dark">
           <ul className="p-3 space-y-3">
-            {option.map((option, id) => {
+            {option.map(({ label, onClick }, index) => {
               return (
-                <li key={id} onClick={option.onClick}>
-                  {option.label}
+                <li
+                  className="text-primary-dark dark:text-primary"
+                  key={label + index}
+                  onMouseDown={onClick}
+                >
+                  {label}
                 </li>
               );
             })}

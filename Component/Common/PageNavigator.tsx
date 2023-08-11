@@ -16,7 +16,6 @@ const PageNavigator: FC<Props> = ({
     </div>
   );
 };
-
 const Button: FC<{ title: string; onClick?: MouseEventHandler }> = ({
   title,
   onClick,

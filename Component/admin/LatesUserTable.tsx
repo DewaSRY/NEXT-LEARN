@@ -16,7 +16,6 @@ const LatesUserTable: FC<Props> = ({ users }): JSX.Element => {
             <th className="p-2">Email</th>
             <th className="p-2">Provider</th>
           </tr>
-
           {users?.map((profile) => {
             return (
               <tr className="border-b" key={profile.id}>

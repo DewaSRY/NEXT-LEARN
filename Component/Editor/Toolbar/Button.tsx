@@ -14,7 +14,6 @@ type ButtonProps = {
   onMouseDown?: MouseEventHandler<HTMLButtonElement>;
   onClick?: MouseEventHandler<HTMLButtonElement>;
 } & HtmlHTMLAttributes<HTMLButtonElement>;
-
 const Button: FC<ButtonProps> = ({
   active,
   children,

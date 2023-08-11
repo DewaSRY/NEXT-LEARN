@@ -1,7 +1,7 @@
 import { FC } from "react";
 
-import DropDownOption from "../../DropDownOption";
-import Button from "../../Common/Button";
+import DropDownOption from "../../Common/DropDownOption";
+import Button from "./Button";
 import GalleryModal from "../GalleryModal";
 import { useEditorContext } from "../../../Hooks/Use-EditorContext";
 interface ToolbarProps {}

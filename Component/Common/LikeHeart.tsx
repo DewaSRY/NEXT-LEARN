@@ -7,7 +7,6 @@ interface Props {
   liked?: boolean;
   onClick?(): void;
 }
-
 const LikeHeart: FC<Props> = ({
   liked = false,
   label,

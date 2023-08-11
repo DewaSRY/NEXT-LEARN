@@ -1,6 +1,6 @@
 import { isValidObjectId } from "mongoose";
 import { NextApiHandler } from "next";
-import dbConnect from "../../../lib/Mongose.conect";
+import dbConnect from "../../../lib/Mongooses";
 import { formatComment, isAuth } from "../../../lib/utils";
 import {
   commentValidationSchema,

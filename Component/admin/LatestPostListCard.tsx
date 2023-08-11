@@ -21,14 +21,12 @@ const LatestPostListCard: FC<Props> = ({
         {trimText(title, 50)}
       </h1>
       <p className="text-sm text-secondary-dark">{trimText(meta, 100)}</p>
-
       <div className="flex items-center justify-end space-x-3">
         <Link href={"/admin/posts/update/" + slug}>
           <a className="text-primary-dark dark:text-primary transition hover:underline">
             Edit
           </a>
         </Link>
-
         <button
           onClick={onDeleteClick}
           className="text-primary-dark dark:text-primary transition hover:underline"

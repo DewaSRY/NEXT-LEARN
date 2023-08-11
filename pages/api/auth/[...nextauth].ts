@@ -1,6 +1,6 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import GitHubAuthProvider from "next-auth/providers/github";
-import dbConnect from "../../../lib/Mongose.conect";
+import dbConnect from "../../../lib/Mongooses";
 import User from "../../../Models/User";
 
 const {
@@ -31,14 +31,12 @@ export const authOptions: NextAuthOptions = {
           avatar: profile.avatar_url,
           role: "user",
         };
-
         // store new user inside db
         if (!oldUser) {
           const newUser = new User({
             ...userProfile,
             provider: "github",
           });
-
           await newUser.save();
         } else {
           userProfile.role = oldUser.role;

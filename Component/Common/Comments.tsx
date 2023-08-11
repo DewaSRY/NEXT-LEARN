@@ -44,9 +44,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
 
   const updateEditedComment = (newComment: CommentResponse) => {
     if (!comments) return;
-
     let updatedComments = [...comments];
-
     // To update the we can only change the content
     // if edited comment is chief
     if (newComment.chiefComment) {
@@ -58,16 +56,13 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
       const chiefCommentIndex = updatedComments.findIndex(
         ({ id }) => id === newComment.repliedTo
       );
-
       let newReplies = updatedComments[chiefCommentIndex].replies;
       newReplies = newReplies?.map((comment) => {
         if (comment.id === newComment.id) comment.content = newComment.content;
         return comment;
       });
-
       updatedComments[chiefCommentIndex].replies = newReplies;
     }
-
     setComments([...updatedComments]);
   };
 
@@ -86,14 +81,12 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
       );
       newComments[chiefCommentIndex].replies = newReplies;
     }
-
     setComments([...newComments]);
   };
 
   const updateLikedComments = (likedComment: CommentResponse) => {
     if (!comments) return;
     let newComments = [...comments];
-
     if (likedComment.chiefComment)
       newComments = newComments.map((comment) => {
         if (comment.id === likedComment.id) return likedComment;
@@ -111,7 +104,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
       );
       newComments[chiefCommentIndex].replies = newReplies;
     }
-
     setComments([...newComments]);
   };
 
@@ -133,7 +125,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
       .then(({ data }) => insertNewReplyComments(data.comment))
       .catch((err) => console.log(err));
   };
-
   const handleUpdateSubmit = (content: string, id: string) => {
     axios
       .patch(`/api/comment?commentId=${id}`, { content })
@@ -235,7 +226,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
           <GitHubAuthButton />
         </div>
       )}
-
       {comments?.map((comment) => {
         const { replies } = comment;
         return (
@@ -252,7 +242,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
               onDeleteClick={() => handleOnDeleteClick(comment)}
               onLikeClick={() => handleOnLikeClick(comment)}
             />
-
             {replies?.length ? (
               <div className="w-[93%] ml-auto space-y-3">
                 <h1 className="text-secondary-dark mb-3">Replies</h1>
@@ -286,7 +275,6 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
           />
         </div>
       ) : null}
-
       <ConfirmModal
         visible={showConfirmModal}
         title="Are you sure?"

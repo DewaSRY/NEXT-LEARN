@@ -44,7 +44,8 @@ const Users: NextPage<Props> = () => {
   useEffect(fetchAllUsers, []);
 
   return (
-    <AdminLayout>
+    // <AdminLayout>
+    <>
       <h1 className="text-2xl dark:text-primary text-primary-dark font-semibold py-2 transition">
         Users
       </h1>
@@ -55,7 +56,8 @@ const Users: NextPage<Props> = () => {
           onPrevClick={handleOnPrevClick}
         />
       </div>
-    </AdminLayout>
+    </>
+    // </AdminLayout>
   );
 };
 

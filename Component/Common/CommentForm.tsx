@@ -27,18 +27,14 @@ const CommentForm: FC<Props> = ({
     if (editor && !busy) {
       const value = editor?.getHTML();
       if (value === "<p></p>") return;
-
       onSubmit(value);
     }
   };
-
   useEffect(() => {
     if (typeof initialState === "string")
       editor?.chain().focus().setContent(initialState).run();
   }, [editor, initialState]);
-
   if (!visible) return null;
-
   return (
     <div>
       {title ? (
@@ -50,11 +46,9 @@ const CommentForm: FC<Props> = ({
         className="min-h-[200px] border-2 border-secondary-dark rounded p-2"
         editor={editor}
       />
-
       <div className="flex justify-end py-3">
         <div className="flex space-x-4">
           <ActionButton busy={busy} title="Submit" onClick={handleSubmit} />
-
           {onClose ? (
             <button
               onClick={onClose}

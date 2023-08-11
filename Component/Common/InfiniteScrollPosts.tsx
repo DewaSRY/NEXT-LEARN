@@ -4,7 +4,6 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { PostDetail } from "../../Utils/types";
 import ConfirmModal from "./ConfirmModal";
 import PostCard from "./PostCard";
-
 interface Props {
   posts: PostDetail[];
   showControls?: boolean;
@@ -14,7 +13,6 @@ interface Props {
   loader?: ReactNode;
   onPostRemoved(post: PostDetail): void;
 }
-
 const InfiniteScrollPosts: FC<Props> = ({
   posts,
   showControls,
@@ -27,25 +25,19 @@ const InfiniteScrollPosts: FC<Props> = ({
   const [removing, setRemoving] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [postToRemove, setPostToRemove] = useState<PostDetail | null>(null);
-
   const handleOnDeleteClick = (post: PostDetail) => {
     setPostToRemove(post);
     setShowConfirmModal(true);
   };
-
   const handleDeleteCancel = () => {
     setShowConfirmModal(false);
   };
-
   const handleOnDeleteConfirm = async () => {
     if (!postToRemove) return handleDeleteCancel();
-
     setShowConfirmModal(false);
     setRemoving(true);
     const { data } = await axios.delete(`/api/posts/${postToRemove.id}`);
-
     if (data.removed) onPostRemoved(postToRemove);
-
     setRemoving(false);
   };
 
@@ -84,7 +76,6 @@ const InfiniteScrollPosts: FC<Props> = ({
         onConfirm={handleOnDeleteConfirm}
         title="Are you sure?"
         subTitle="This action will remove this post permanently!"
-        // busy
       />
     </>
   );

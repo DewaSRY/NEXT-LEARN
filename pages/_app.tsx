@@ -6,6 +6,7 @@ import Session from "next-auth";
 import Router from "next/router";
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
+import Layout from "../Component/Layout";
 interface Props {
   session?: typeof Session | null;
 }
@@ -20,7 +21,9 @@ function MyApp({ Component, pageProps }: AppProps<Props>) {
       <SessionProvider session={pageProps.session}>
         <EditorProvider>
           <GalleryProvider>
-            <Component {...pageProps} />
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
           </GalleryProvider>
         </EditorProvider>
       </SessionProvider>

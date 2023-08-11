@@ -28,16 +28,13 @@ const ConfirmModal: FC<Props> = ({
         <p className="dark:text-primary-dark text-primary font-semibold text-lg">
           {title}
         </p>
-        {/* sub title */}
         <p className="dark:text-primary-dark text-primary">{subTitle}</p>
-        {/* buttons */}
-        {busy && (
+        {busy ? (
           <p className="flex items-center space-x-2 dark:text-primary-dark text-primary pt-2">
             <ImSpinner3 className="animate-spin" />
             <span>Please wait</span>
           </p>
-        )}
-        {!busy && (
+        ) : (
           <div className="flex items-center space-x-2 pt-2">
             <button
               onClick={onConfirm}

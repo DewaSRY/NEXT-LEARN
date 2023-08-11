@@ -7,7 +7,6 @@ export interface PostDetail {
   thumbnail?: string;
   createdAt: string;
 }
-
 export interface IncomingPost {
   title: string;
   content: string;
@@ -15,7 +14,6 @@ export interface IncomingPost {
   meta: string;
   tags: string;
 }
-
 export interface UserProfile {
   id: string;
   name: string;
@@ -23,7 +21,6 @@ export interface UserProfile {
   avatar: string | undefined;
   role: "user" | "admin";
 }
-
 export type replyComments = CommentResponse[];
 export interface CommentResponse {
   id: string;
@@ -36,7 +33,6 @@ export interface CommentResponse {
   chiefComment: boolean;
   owner: { name: string; id: string; avatar?: string };
 }
-
 export interface LatestComment {
   id: string;
   owner: {
@@ -51,7 +47,6 @@ export interface LatestComment {
     slug: string;
   };
 }
-
 export interface LatestUserProfile {
   id: string;
   name: string;

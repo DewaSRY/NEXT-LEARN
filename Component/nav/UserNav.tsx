@@ -2,13 +2,13 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FC } from "react";
 import { HiLightBulb } from "react-icons/hi";
-import { GitHubAuthButton } from "../../button";
-import { APP_NAME } from "../AppHead";
-import DropdownOptions, { Option } from "../../DropDownOption";
-import Logo from "../../../assets/Logo";
-import ProfileHead from "../ProfileHead";
+import { GitHubAuthButton } from "../button";
+import { APP_NAME } from "../Common/AppHead";
+import DropdownOptions, { Option } from "../Common/DropDownOption";
+import Logo from "../../assets/Logo";
+import ProfileHead from "../Common/ProfileHead";
 import { useRouter } from "next/router";
-import { UserProfile } from "../../../Utils/types";
+import { UserProfile } from "../../Utils/types";
 
 interface Props {}
 
