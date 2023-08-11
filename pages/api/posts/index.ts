@@ -2,7 +2,13 @@ import { NextApiHandler } from "next";
 import dbConnect from "../../../lib/Mongooses";
 import Joi from "joi";
 import { postValidationSchema, validateSchema } from "../../../lib/validator";
-import { formatPosts, readFile, readPostsFromDb } from "../../../lib/utils";
+import {
+  formatPosts,
+  isAdmin,
+  isAuth,
+  readFile,
+  readPostsFromDb,
+} from "../../../lib/utils";
 import Post from "../../../Models/posts";
 import formidable from "formidable";
 import cloudinary from "../../../lib/cloudinary";
@@ -20,6 +26,10 @@ const handler: NextApiHandler = async (req, res) => {
   }
 };
 const createNewPost: NextApiHandler = async (req, res) => {
+  const admin = await isAdmin(req, res);
+  const user = await isAuth(req, res);
+  if (!admin || !user)
+    return res.status(402).json({ error: "unauthorize request!" });
   const { files, body } = await readFile<IncomingPost>(req);
   let tags = [];
   // tags will be in string form so converting to array
@@ -38,6 +48,7 @@ const createNewPost: NextApiHandler = async (req, res) => {
     slug,
     meta,
     tags,
+    author: user.id,
   });
   // uploading thumbnail if there is any
   const thumbnailFille = files.thumbnail as formidable.File[];

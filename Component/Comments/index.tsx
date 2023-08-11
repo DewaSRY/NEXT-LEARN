@@ -2,7 +2,7 @@ import axios from "axios";
 import { FC, useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { CommentResponse } from "../../Utils/types";
-import { GitHubAuthButton } from "../button";
+import { GitHubAuthButton } from "../Common/GitHubAuthButton";
 import CommentCard from "./CommentCard";
 import CommentForm from "./CommentForm";
 import ConfirmModal from "../Common/ConfirmModal";
@@ -20,6 +20,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   const [comments, setComments] = useState<CommentResponse[]>();
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [reachedToEnd, setReachedToEnd] = useState(false);
+  const [busyCommentLike, setBusyCommentLike] = useState(false);
   const [commentToDelete, setCommentToDelete] =
     useState<CommentResponse | null>(null);
   const userProfile = useAuth();
@@ -153,10 +154,17 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
   };
 
   const handleOnLikeClick = (comment: CommentResponse) => {
+    setBusyCommentLike(true);
     axios
       .post("/api/comment/update-like", { commentId: comment.id })
-      .then(({ data }) => updateLikedComments(data.comment))
-      .catch((err) => console.log(err));
+      .then(({ data }) => {
+        updateLikedComments(data.comment);
+        setBusyCommentLike(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        setBusyCommentLike(false);
+      });
   };
   // fetching all comments
   const fetchAllComments = async (pageNo = currentPageNo) => {
@@ -233,6 +241,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
               }
               onDeleteClick={() => handleOnDeleteClick(comment)}
               onLikeClick={() => handleOnLikeClick(comment)}
+              busy={busyCommentLike}
             />
             {replies?.length ? (
               <div className="w-[93%] ml-auto space-y-3">
@@ -251,6 +260,7 @@ const Comments: FC<Props> = ({ belongsTo, fetchAll }): JSX.Element => {
                       }
                       onDeleteClick={() => handleOnDeleteClick(reply)}
                       onLikeClick={() => handleOnLikeClick(reply)}
+                      busy={busyCommentLike}
                     />
                   );
                 })}
