@@ -1,6 +1,6 @@
 import { ReactNode, FC } from "react";
 import AdminNav, { NavOptions } from "./AdminNav";
-import AppHead from "./AppHead";
+import AppHead from "../Nav-Utils/AppHead";
 import AdminSecondaryNav from "./AdminSecondaryNav";
 import Link from "next/link";
 import {

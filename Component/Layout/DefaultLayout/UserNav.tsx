@@ -2,11 +2,11 @@ import Link from "next/link";
 import { useSession, signIn, signOut } from "next-auth/react";
 import { FC } from "react";
 import { HiLightBulb } from "react-icons/hi";
-import { GitHubAuthButton } from "../../button";
-import { APP_NAME } from "../AdminLayout/AppHead";
+import { GitHubAuthButton } from "../../Common/GitHubAuthButton";
+import ProfileHead from "../Nav-Utils/ProfileHead";
+import { APP_NAME } from "../Nav-Utils/AppHead";
 import DropdownOptions, { Option } from "../../Common/DropDownOption";
 import Logo from "../../../assets/Logo";
-import ProfileHead from "./ProfileHead";
 import { useRouter } from "next/router";
 import { UserProfile } from "../../../Utils/types";
 

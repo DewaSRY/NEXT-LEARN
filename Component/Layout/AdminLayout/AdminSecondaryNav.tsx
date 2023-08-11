@@ -4,7 +4,7 @@ import { FC } from "react";
 import useDarkMode from "../../../Hooks/useDarkMode";
 import DropdownOptions, { Option } from "../../Common/DropDownOption";
 
-import ProfileHead from "../nav/ProfileHead";
+import ProfileHead from "../Nav-Utils/ProfileHead";
 enum SearchBarStyle {
   inputStyle = "border-2 bg-transparent border-secondary-dark p-2 text-primary-dark dark:text-primary rounded focus:border-primary-dark dark:focus:border-primary outline-none transition",
 }
